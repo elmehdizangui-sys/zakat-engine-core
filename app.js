@@ -77,7 +77,6 @@ function getSelectedCurrency() {
   return document.getElementById('currency-select')?.value || 'USD';
 }
 
-
 function initCurrencySelector() {
   const select = document.getElementById('currency-select');
   if (!select) return;
@@ -91,7 +90,7 @@ function onCurrencyChange() {
   const note = document.getElementById('rates-note');
   if (note) {
     if (code !== 'USD') {
-      note.textContent = `Rates as of ${RATES_DATE}`;
+      note.textContent = `${t('ratesAsOf')} ${RATES_DATE}`;
       note.classList.remove('hidden');
     } else {
       note.classList.add('hidden');
@@ -115,14 +114,14 @@ function createAutocomplete(inputEl, dropdownEl) {
     if (!query || query.length < 1) { hide(); return; }
     const q = query.toUpperCase();
     const matches = Object.entries(STOCK_DATA)
-      .filter(([t, d]) => t.startsWith(q) || d.name.toUpperCase().includes(q))
+      .filter(([ticker, d]) => ticker.startsWith(q) || d.name.toUpperCase().includes(q))
       .slice(0, 7);
     if (matches.length === 0) { hide(); return; }
     acIndex = -1;
-    dropdownEl.innerHTML = matches.map(([t, d]) => `
-      <div class="autocomplete-item" role="option" data-ticker="${escapeHtml(t)}"
+    dropdownEl.innerHTML = matches.map(([ticker, d]) => `
+      <div class="autocomplete-item" role="option" data-ticker="${escapeHtml(ticker)}"
            onmousedown="_acPickFromDropdown(event); return false;">
-        <span class="ac-ticker">${escapeHtml(t)}</span>
+        <span class="ac-ticker">${escapeHtml(ticker)}</span>
         <span class="ac-name">${escapeHtml(d.name)}</span>
       </div>
     `).join('');
@@ -237,10 +236,10 @@ function toggleMoreTickers() {
   const btn   = document.getElementById('show-more-btn');
   if (tickerChipsExpanded) {
     extra.classList.add('visible');
-    btn.textContent = '− show less';
+    btn.textContent = t('showLess');
   } else {
     extra.classList.remove('visible');
-    btn.textContent = '+ 12 more';
+    btn.textContent = t('showMore');
   }
 }
 
@@ -253,17 +252,19 @@ function buildRowEl(rowId) {
   row.dataset.rowId = rowId;
   row.innerHTML = `
     <div class="input-group ticker-wrapper">
-      <label>Ticker</label>
+      <label>${escapeHtml(t('labelTicker'))}</label>
       <input type="text" class="row-ticker" placeholder="AAPL"
              maxlength="10" autocomplete="off" spellcheck="false"
              aria-autocomplete="list">
       <div class="autocomplete-dropdown hidden" role="listbox"></div>
     </div>
     <div class="input-group shares-wrapper">
-      <label>Shares</label>
+      <label>${escapeHtml(t('labelShares'))}</label>
       <input type="number" class="row-shares" placeholder="100" min="0.001" step="any">
     </div>
-    <button class="remove-row-btn" onclick="removePortfolioRow(this)" title="Remove row" aria-label="Remove row">✕</button>
+    <button class="remove-row-btn" onclick="removePortfolioRow(this)"
+            title="${escapeHtml(t('removeRowTitle'))}"
+            aria-label="${escapeHtml(t('removeRowAriaLabel'))}">✕</button>
   `;
   return row;
 }
@@ -353,25 +354,25 @@ async function calculate() {
   }
 
   if (rowData.length === 0) {
-    showError('Please enter at least one stock ticker and number of shares.');
+    showError(t('errNoStocks'));
     return;
   }
   for (const { ticker, sharesRaw } of rowData) {
-    if (!ticker) { showError('One of your rows is missing a ticker symbol.'); return; }
+    if (!ticker) { showError(t('errMissingTicker')); return; }
     const shares = parseFloat(sharesRaw);
     if (!sharesRaw || isNaN(shares) || shares <= 0) {
-      showErrorHtml(`Please enter a valid number of shares for <strong>${escapeHtml(ticker)}</strong>.`);
+      showErrorHtml(t('errInvalidShares', escapeHtml(ticker)));
       return;
     }
   }
 
   const btn = document.getElementById('calculate-btn');
   btn.disabled = true;
-  btn.textContent = 'Calculating…';
+  btn.textContent = t('btnCalculating');
 
   const resultsEl = document.getElementById('results-section');
   resultsEl.classList.remove('hidden');
-  resultsEl.innerHTML = '<p class="loading-msg">Fetching prices…</p>';
+  resultsEl.innerHTML = `<p class="loading-msg">${escapeHtml(t('fetchingPrices'))}</p>`;
 
   // Fetch all prices in parallel, tolerate individual failures
   const settled = await Promise.allSettled(
@@ -407,7 +408,7 @@ async function calculate() {
   });
 
   btn.disabled = false;
-  btn.textContent = 'Calculate Portfolio Zakat';
+  btn.textContent = t('btnCalculate');
 
   renderPortfolioResults(stocks, getSelectedCurrency(), currentIntention);
   resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -417,7 +418,7 @@ async function calculate() {
 
 function renderPortfolioResults(stocks, currencyCode, intention) {
   const el = document.getElementById('results-section');
-  // Persist for re-render on currency / intention change
+  // Persist for re-render on currency / intention / language change
   el._lastStocks = stocks;
 
   const cur = EXCHANGE_RATES[currencyCode] || EXCHANGE_RATES.USD;
@@ -445,7 +446,7 @@ function renderPortfolioResults(stocks, currencyCode, intention) {
       return `<tr class="stock-row price-error-row">
         <td><strong>${escapeHtml(s.ticker)}</strong></td>
         <td>—</td>
-        <td class="price-warn">Price unavailable</td>
+        <td class="price-warn">${escapeHtml(t('priceUnavailable'))}</td>
         <td>—</td><td>—</td><td>—</td><td>—</td>
       </tr>`;
     }
@@ -462,57 +463,58 @@ function renderPortfolioResults(stocks, currencyCode, intention) {
 
   // Method badge labels depend on intention
   const isPassive  = intention === 'passive';
-  const labelA     = isPassive ? 'Maximum Obligation' : 'Primary Method';
-  const labelB     = isPassive ? 'Recommended'        : 'Conservative Alternative';
-  const classA     = isPassive ? 'badge-secondary'    : 'badge-primary';
-  const classB     = isPassive ? 'badge-primary'      : 'badge-secondary';
-  const cardAExtra = isPassive ? 'card-secondary'     : 'card-primary';
-  const cardBExtra = isPassive ? 'card-primary'       : 'card-secondary';
+  const labelA     = isPassive ? t('badgeMaxObligation') : t('badgePrimary');
+  const labelB     = isPassive ? t('badgeRecommended')   : t('badgeConservative');
+  const classA     = isPassive ? 'badge-secondary'       : 'badge-primary';
+  const classB     = isPassive ? 'badge-primary'         : 'badge-secondary';
+  const cardAExtra = isPassive ? 'card-secondary'        : 'card-primary';
+  const cardBExtra = isPassive ? 'card-primary'          : 'card-secondary';
 
   // Method C — passive only, placeholder (no dividend data in V1)
   const methodCHtml = isPassive ? `
     <div class="result-card card-c">
-      <span class="result-badge badge-info">Method C — Dividend Method</span>
-      <h3>Dividends Only</h3>
+      <span class="result-badge badge-info">${escapeHtml(t('methodCBadge'))}</span>
+      <h3>${escapeHtml(t('methodCTitle'))}</h3>
       <div class="method-c-body">
-        <p>As a <strong>long-term passive investor</strong>, some scholars hold that zakat applies only to dividends received — not the full market value of your shares.</p>
-        <p class="method-c-formula">Formula: <em>Total Dividends × 2.5%</em></p>
+        <p>${t('methodCPassiveNote')()}</p>
+        <p class="method-c-formula">${escapeHtml(t('methodCFormula'))} <em>${escapeHtml(t('methodCFormulaExpr'))}</em></p>
         <div class="method-c-example">
-          Example: if you received <strong>${cvt(1000)}</strong> in dividends, your zakat would be <strong>${cvt(25)}</strong>
+          ${t('methodCExample', cvt(1000), cvt(25))}
         </div>
-        <p class="method-c-note">Dividend data is not fetched automatically in V1. Use your actual dividend statement to calculate.</p>
+        <p class="method-c-note">${escapeHtml(t('methodCNote'))}</p>
       </div>
     </div>` : '';
 
   const ratesNote = currencyCode !== 'USD'
-    ? `<span class="rates-inline-note">Rates as of ${RATES_DATE}</span>` : '';
+    ? `<span class="rates-inline-note">${escapeHtml(t('ratesAsOf'))} ${RATES_DATE}</span>` : '';
 
+  const nisabStatusText = nisabMet ? t('nisabMet') : t('nisabNotMet');
   const nisabStatus = `
     <div class="portfolio-meta">
       <span class="nisab-status ${nisabMet ? 'nisab-met' : 'nisab-not-met'}">
-        Nisab ${nisabMet ? 'met ✓' : 'not met ✗'} — threshold: ${nisabDisplay}
+        ${escapeHtml(nisabStatusText)} — ${escapeHtml(t('nisabThreshold'))}: ${nisabDisplay}
       </span>
       ${ratesNote}
     </div>`;
 
   const nisabNotice = !nisabMet ? `
     <div class="nisab-notice">
-      <h3>No Zakat Due</h3>
-      <p>Your total portfolio value of <strong>${cvt(totalValueUSD)}</strong> is below the nisab threshold of <strong>${nisabDisplay}</strong>.</p>
-      <p>Zakat on stocks is only obligatory when the portfolio meets or exceeds the nisab and has been held for one full lunar year (hawl).</p>
+      <h3>${escapeHtml(t('noZakatDue'))}</h3>
+      <p>${t('nisabNoticeBody', cvt(totalValueUSD), nisabDisplay)}</p>
+      <p>${escapeHtml(t('nisabNoticeHawl'))}</p>
     </div>` : '';
 
   const methodsGrid = nisabMet ? `
     <div class="methods-grid${isPassive ? ' passive-mode' : ''}">
       <div class="result-card card-a ${cardAExtra}">
-        <span class="result-badge ${classA}">${labelA} — Method A</span>
-        <h3>Market Value</h3>
+        <span class="result-badge ${classA}">${escapeHtml(labelA)} — Method A</span>
+        <h3>${escapeHtml(t('methodATitle'))}</h3>
         <div class="zakat-amount">${cvt(totalZakatAusd)}</div>
         <div class="result-formula">${cvt(totalValueUSD)} × 2.5%</div>
       </div>
       <div class="result-card card-b ${cardBExtra}">
-        <span class="result-badge ${classB}">${labelB} — Method B</span>
-        <h3>Underlying Assets</h3>
+        <span class="result-badge ${classB}">${escapeHtml(labelB)} — Method B</span>
+        <h3>${escapeHtml(t('methodBTitle'))}</h3>
         <div class="zakat-amount">${cvt(totalZakatBusd)}</div>
         <div class="result-formula">${cvt(totalValueUSD)} × 30% × 2.5%</div>
       </div>
@@ -520,28 +522,28 @@ function renderPortfolioResults(stocks, currencyCode, intention) {
     </div>
 
     <div class="difference-box">
-      <div class="difference-label">Difference Between Methods A &amp; B</div>
+      <div class="difference-label">${escapeHtml(t('diffLabel'))}</div>
       <div class="difference-amount">${cvt(difference)}</div>
-      <div class="difference-pct">Method A yields <strong>${diffPct.toFixed(0)}% more</strong> than Method B</div>
-      <div class="difference-insight">Same shares. Same price. Same day. Two valid scholarly methods.</div>
+      <div class="difference-pct">${t('diffPct', diffPct.toFixed(0))}</div>
+      <div class="difference-insight">${escapeHtml(t('diffInsight'))}</div>
     </div>` : '';
 
   const assumptions = `
     <div class="assumptions-box">
-      <h4>Assumptions</h4>
+      <h4>${escapeHtml(t('assumptionsTitle'))}</h4>
       <ul class="assumptions-list">
-        <li>Holding period assumed ≥ 1 lunar year (hawl). If you have not held these shares for a full lunar year, zakat is not yet due.</li>
-        <li>Nisab: ${nisabFormula} (gold price as of ${GOLD_PRICE_DATE})</li>
-        <li>Method B uses a 30% proxy for zakatable assets — a scholarly approximation when company balance sheet data is unavailable. (Source: IFG, Qaradawi)</li>
-        <li>Method B Proxy: The 30% is a common approximation for major indices (S&amp;P 500 / FTSE).</li>
-        <li>Intention Rule: "Active Trading" assumes intent to sell the stock for profit.</li>
-        <li>Passive Rule: "Long-Term Passive" assumes you hold for growth/dividends with no immediate intent to sell the principal.</li>
-        <li>Zakat rate: 2.5% (assumes lunar year; solar equivalent ≈ 2.5775% — not used here)</li>
+        <li>${escapeHtml(t('assumptionHawl'))}</li>
+        <li>${escapeHtml(t('assumptionNisab', nisabFormula, GOLD_PRICE_DATE))}</li>
+        <li>${escapeHtml(t('assumptionProxy'))}</li>
+        <li>${escapeHtml(t('assumptionProxySource'))}</li>
+        <li>${escapeHtml(t('assumptionActiveRule'))}</li>
+        <li>${escapeHtml(t('assumptionPassiveRule'))}</li>
+        <li>${escapeHtml(t('assumptionRate'))}</li>
         ${currencyCode !== 'USD'
-          ? `<li>Currency: ${currencyCode} — converted at hardcoded rates as of ${RATES_DATE}. Verify current rates for precision.</li>`
-          : '<li>Currency: USD</li>'}
+          ? `<li>${escapeHtml(t('assumptionCurrencyForeign', currencyCode, RATES_DATE))}</li>`
+          : `<li>${escapeHtml(t('assumptionCurrencyUSD'))}</li>`}
       </ul>
-      <p class="disclaimer">This tool produces estimates — it is not a religious ruling (fatwa). Consult a qualified scholar for your specific situation.</p>
+      <p class="disclaimer">${escapeHtml(t('disclaimer'))}</p>
     </div>`;
 
   el.innerHTML = `
@@ -550,19 +552,19 @@ function renderPortfolioResults(stocks, currencyCode, intention) {
         <table class="portfolio-table">
           <thead>
             <tr>
-              <th>Ticker</th>
-              <th>Company</th>
-              <th>Price</th>
-              <th>Shares</th>
-              <th>Value</th>
-              <th class="zakat-a-col">Zakat A</th>
-              <th class="zakat-b-col">Zakat B</th>
+              <th>${escapeHtml(t('thTicker'))}</th>
+              <th>${escapeHtml(t('thCompany'))}</th>
+              <th>${escapeHtml(t('thPrice'))}</th>
+              <th>${escapeHtml(t('thShares'))}</th>
+              <th>${escapeHtml(t('thValue'))}</th>
+              <th class="zakat-a-col">${escapeHtml(t('thZakatA'))}</th>
+              <th class="zakat-b-col">${escapeHtml(t('thZakatB'))}</th>
             </tr>
           </thead>
           <tbody>${stockRows}</tbody>
           <tfoot>
             <tr class="totals-row">
-              <td colspan="4"><strong>Portfolio Total</strong></td>
+              <td colspan="4"><strong>${escapeHtml(t('portfolioTotal'))}</strong></td>
               <td><strong>${cvt(totalValueUSD)}</strong></td>
               <td class="zakat-a-cell"><strong>${cvt(totalZakatAusd)}</strong></td>
               <td class="zakat-b-cell"><strong>${cvt(totalZakatBusd)}</strong></td>
@@ -593,7 +595,7 @@ function showError(message) {
   box.appendChild(document.createTextNode(message));
   el.replaceChildren(box);
   const btn = document.getElementById('calculate-btn');
-  if (btn) { btn.disabled = false; btn.textContent = 'Calculate Portfolio Zakat'; }
+  if (btn) { btn.disabled = false; btn.textContent = t('btnCalculate'); }
 }
 
 function showErrorHtml(htmlFragment) {
@@ -601,12 +603,17 @@ function showErrorHtml(htmlFragment) {
   el.classList.remove('hidden');
   el.innerHTML = `<div class="error-box"><strong>Error:</strong> ${htmlFragment}</div>`;
   const btn = document.getElementById('calculate-btn');
-  if (btn) { btn.disabled = false; btn.textContent = 'Calculate Portfolio Zakat'; }
+  if (btn) { btn.disabled = false; btn.textContent = t('btnCalculate'); }
 }
 
 // --- Init ---
 
 document.addEventListener('DOMContentLoaded', () => {
+  // i18n must be loaded first (i18n.js is loaded before app.js in HTML)
+  applyDirection();
+  applyTranslations();
+  initLangSwitcher();
+
   initCurrencySelector();
   initPortfolio();
 });

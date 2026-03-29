@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,13 @@
             <span class="header-wordmark">ZakatEngine</span>
           </div>
           <div class="header-meta">
-            <p class="header-standard">Based on AAOIFI Shariah Standard No. 35</p>
+            <p class="header-standard" data-i18n="headerStandard">Based on AAOIFI Shariah Standard No. 35</p>
+          </div>
+          <!-- Language Switcher -->
+          <div id="lang-switcher" class="lang-switcher" aria-label="Language selector">
+            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
+            <span class="lang-divider">|</span>
+            <button class="lang-btn" data-lang="ar" onclick="setLanguage('ar')">ع</button>
           </div>
         </div>
       </div>
@@ -40,7 +46,7 @@
                 <line x1="10" y1="14" x2="14" y2="14"/>
               </svg>
             </div>
-            <p class="hero-node-label">Your Stock Portfolio</p>
+            <p class="hero-node-label" data-i18n="heroNode1Label">Your Stock Portfolio</p>
           </div>
 
           <!-- Arrow -->
@@ -58,7 +64,7 @@
                 <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
               </svg>
             </div>
-            <p class="hero-node-label hero-node-label--engine">ZakatEngine</p>
+            <p class="hero-node-label hero-node-label--engine" data-i18n="heroNode2Label">ZakatEngine</p>
           </div>
 
           <!-- Arrow -->
@@ -72,11 +78,11 @@
           <div class="hero-node">
             <div class="hero-chips">
               <div class="hero-chip hero-chip--a">
-                <span class="hero-chip-label">Method A · Full Market Value</span>
+                <span class="hero-chip-label" data-i18n="heroChipLabelA">Method A · Full Market Value</span>
                 <span class="hero-chip-amount">$1,240</span>
               </div>
               <div class="hero-chip hero-chip--b">
-                <span class="hero-chip-label">Method B · 30% Proxy</span>
+                <span class="hero-chip-label" data-i18n="heroChipLabelB">Method B · 30% Proxy</span>
                 <span class="hero-chip-amount">$372</span>
               </div>
             </div>
@@ -84,7 +90,7 @@
 
         </div>
 
-        <p class="hero-caption"><em>Same portfolio. Two valid scholarly methods. See the difference.</em></p>
+        <p class="hero-caption"><em data-i18n="heroCaption">Same portfolio. Two valid scholarly methods. See the difference.</em></p>
       </div>
     </section>
 
@@ -97,7 +103,7 @@
           <!-- Currency + intention row -->
           <div class="controls-bar">
             <div class="control-group">
-              <label class="control-label" for="currency-select">Currency</label>
+              <label class="control-label" for="currency-select" data-i18n="labelCurrency">Currency</label>
               <div class="select-wrap">
                 <select id="currency-select" onchange="onCurrencyChange()"></select>
               </div>
@@ -105,27 +111,27 @@
             </div>
 
             <div class="control-group">
-              <span class="control-label">Investment Intention</span>
+              <span class="control-label" data-i18n="labelIntention">Investment Intention</span>
               <div class="intention-toggle" role="group" aria-label="Investment intention">
-                <button class="intention-btn active" data-intention="active" onclick="setIntention('active')">
+                <button class="intention-btn active" data-intention="active" onclick="setIntention('active')" data-i18n="btnIntentionActive">
                   Active Trading
                 </button>
-                <button class="intention-btn" data-intention="passive" onclick="setIntention('passive')">
+                <button class="intention-btn" data-intention="passive" onclick="setIntention('passive')" data-i18n="btnIntentionPassive">
                   Long-Term Passive
                 </button>
               </div>
             </div>
           </div>
 
-          <p class="intention-hint" id="intention-hint-active">Holds for trading / resale — Method A applies as the primary obligation.</p>
-          <p class="intention-hint hidden" id="intention-hint-passive">Holds for long-term growth / dividends — Method B is the scholarly recommendation.</p>
+          <p class="intention-hint" id="intention-hint-active" data-i18n="hintActive">Holds for trading / resale — Method A applies as the primary obligation.</p>
+          <p class="intention-hint hidden" id="intention-hint-passive" data-i18n="hintPassive">Holds for long-term growth / dividends — Method B is the scholarly recommendation.</p>
 
           <!-- Portfolio rows -->
           <div class="portfolio-panel">
             <div class="portfolio-panel-header">
-              <h2 class="panel-title">Your Portfolio</h2>
+              <h2 class="panel-title" data-i18n="panelTitle">Your Portfolio</h2>
               <div class="ticker-hint">
-                <span class="ticker-hint-label">Quick fill:</span>
+                <span class="ticker-hint-label" data-i18n="quickFill">Quick fill:</span>
                 <button class="ticker-pill" onclick="pickTicker('AAPL')">AAPL</button>
                 <button class="ticker-pill" onclick="pickTicker('MSFT')">MSFT</button>
                 <button class="ticker-pill" onclick="pickTicker('AMZN')">AMZN</button>
@@ -152,15 +158,15 @@
                   <button class="ticker-pill" onclick="pickTicker('BABA')">BABA</button>
                   <button class="ticker-pill" onclick="pickTicker('BRK.B')">BRK.B</button>
                 </span>
-                <button class="show-more-btn" id="show-more-btn" onclick="toggleMoreTickers()">+ 12 more</button>
+                <button class="show-more-btn" id="show-more-btn" onclick="toggleMoreTickers()" data-i18n="showMore">+ 12 more</button>
               </div>
             </div>
 
             <div id="portfolio-rows"></div>
 
             <div class="portfolio-actions">
-              <button class="add-row-btn" onclick="addPortfolioRow()">+ Add Stock</button>
-              <button id="calculate-btn" onclick="calculate()">Calculate Zakat</button>
+              <button class="add-row-btn" onclick="addPortfolioRow()" data-i18n="btnAddStock">+ Add Stock</button>
+              <button id="calculate-btn" onclick="calculate()" data-i18n="btnCalculate">Calculate Portfolio Zakat</button>
             </div>
           </div>
 
@@ -172,57 +178,48 @@
         <!-- METHODOLOGY -->
         <section class="methodology-section">
           <div class="methodology-header">
-            <h2 class="section-title">The Two Methods</h2>
-            <p class="section-sub">Same shares. Same price. Same day. Two valid scholarly positions.</p>
+            <h2 class="section-title" data-i18n="methodologyTitle">The Two Methods</h2>
+            <p class="section-sub" data-i18n="methodologySub">Same shares. Same price. Same day. Two valid scholarly positions.</p>
           </div>
 
           <div class="method-grid">
 
             <div class="method-card method-card--a">
               <div class="method-card-top">
-                <span class="method-badge badge-a">Method A</span>
-                <h3>Market Value</h3>
-                <p class="method-sources">
-                  <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI SS 35</a>
-                  · NZF · Islamic Relief
-                </p>
+                <span class="method-card-label" data-i18n="methodACardLabel">Method A — Full Market Value</span>
+                <h3 class="method-card-title" data-i18n="methodACardTitle">Treat Stocks as Trading Goods</h3>
+                <p data-i18n-html="methodACardBody">Treats stocks as <strong>trading goods</strong>. Zakat is due on the full market value of the portfolio, regardless of the company's underlying assets.</p>
               </div>
-              <p>Treats stocks as <strong>trading goods</strong>. Zakat is due on the full market value of the portfolio, regardless of the company's underlying assets.</p>
-              <div class="method-formula">Portfolio Value × 2.5%</div>
+              <div class="method-formula" data-i18n="methodAFormula">Portfolio Value × 2.5%</div>
+              <p class="method-scholars" data-i18n="methodAScholars">· Qaradawi · Hanafi/Shafi'i scholars</p>
             </div>
 
             <div class="method-card method-card--b">
               <div class="method-card-top">
-                <span class="method-badge badge-b">Method B</span>
-                <h3>Underlying Assets</h3>
-                <p class="method-sources">
-                  <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">IFG Guide</a>
-                  · Qaradawi · Hanafi/Shafi'i scholars
-                </p>
+                <span class="method-card-label" data-i18n="methodBCardLabel">Method B — Underlying Assets</span>
+                <h3 class="method-card-title" data-i18n="methodBCardTitle">Treat Stocks as Ownership Stakes</h3>
+                <p data-i18n-html="methodBCardBody">Treats stocks as <strong>partial ownership</strong> of a company. Only the zakatable assets of the company (cash, receivables, inventory) are dutiable — approximated at 30% of market value.</p>
               </div>
-              <p>Treats stocks as <strong>ownership stakes</strong>. Zakat applies only to the company's zakatable assets — cash, inventory, receivables — not the full market value.</p>
-              <div class="method-formula">Portfolio Value × 30% × 2.5%</div>
-              <p class="proxy-note">The 30% is a scholarly proxy when company balance sheet data is unavailable. (IFG, Qaradawi)</p>
+              <div class="method-formula" data-i18n="methodBFormula">Portfolio Value × 30% × 2.5%</div>
+              <p class="method-scholars" data-i18n="methodBScholars">· AAOIFI Standard No. 35 · IFG</p>
+              <p class="proxy-note" data-i18n="proxyNote">The 30% is a scholarly proxy when company balance sheet data is unavailable. (IFG, Qaradawi)</p>
             </div>
 
           </div>
 
           <div class="key-insight">
-            <p><strong>Why the difference matters:</strong> Method A always yields significantly more than Method B. Most online calculators only show you one method. ZakatEngine shows both so you can make an informed decision — or consult a scholar.</p>
+            <p><strong data-i18n="keyInsightTitle">Why the difference matters:</strong> <span data-i18n="keyInsightBody">Method A always yields significantly more than Method B. Most online calculators only show you one method. ZakatEngine shows both so you can make an informed decision — or consult a scholar.</span></p>
           </div>
 
-          <div class="sources-box">
-            <h4 class="sources-title">Primary Sources</h4>
-            <ul class="references-list">
-              <li>
-                <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI — Shariah Standard No. 35: Zakat &amp; Standard No. 21: Financial Papers</a>
-              </li>
-              <li><a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">Islamic Finance Guru — Zakat on Shares</a></li>
-              <li><a href="https://www.zakat.org" target="_blank" rel="noopener">National Zakat Foundation</a></li>
+          <div class="sources-section">
+            <h3 class="sources-title" data-i18n="sourcesTitle">Sources &amp; Further Reading</h3>
+            <ul class="sources-list">
+              <li><a href="https://www.zakat.org" target="_blank" rel="noopener" data-i18n="sourceNZF">National Zakat Foundation</a></li>
+              <li><a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener" data-i18n="sourceIFG">Islamic Finance Guru — Zakat on Shares</a></li>
             </ul>
-            <p class="sources-also">See also:
-              <a href="https://islamqa.info/en/answers/93793" target="_blank" rel="noopener">IslamQA on stocks</a> ·
-              <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">IFG detailed guide</a>
+            <p class="sources-also"><span data-i18n="sourceSeeAlso">See also:</span>
+              <a href="https://islamqa.info/en/answers/93793" target="_blank" rel="noopener" data-i18n="sourceIslamQA">IslamQA on stocks</a> ·
+              <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener" data-i18n="sourceIFGDetail">IFG detailed guide</a>
             </p>
           </div>
         </section>
@@ -233,19 +230,17 @@
     <footer class="site-footer">
       <div class="container">
         <div class="footer-inner">
-          <div class="footer-brand">
-            <span class="footer-wordmark">ZakatEngine</span>
-          </div>
-          <div class="footer-copy">
-            <p>Built by <strong>Elmehdi Zangui</strong></p>
-            <p class="footer-disclaimer">Educational purposes only. This is not a fatwa. Consult a qualified scholar for your specific situation.</p>
-            <p class="footer-standard">Based on <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI Shariah Standard No. 35</a> and classical fiqh positions</p>
+          <div class="footer-content">
+            <p><span data-i18n="footerBuiltBy">Built by</span> <strong data-i18n="footerAuthor">Elmehdi Zangui</strong></p>
+            <p class="footer-disclaimer" data-i18n="footerDisclaimer">Educational purposes only. This is not a fatwa. Consult a qualified scholar for your specific situation.</p>
+            <p class="footer-standard" data-i18n="footerStandard">Based on <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI Shariah Standard No. 35</a> and classical fiqh positions</p>
           </div>
         </div>
       </div>
     </footer>
 
   </div><!-- /page-shell -->
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

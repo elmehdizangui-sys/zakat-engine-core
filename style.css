@@ -1593,4 +1593,127 @@ input::placeholder { color: var(--text-muted); opacity: 0.65; }
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
 
   .site-footer { padding: 1.5rem 0; margin-top: 2rem; }
+
+  .lang-switcher { margin-top: 0.5rem; }
+}
+
+/* ==============================================
+   LANGUAGE SWITCHER
+   ============================================== */
+
+.lang-switcher {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  margin-inline-start: auto;
+}
+
+.lang-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.55rem;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.lang-btn:hover {
+  background: var(--gold-muted);
+  border-color: var(--gold);
+  color: var(--text);
+}
+
+.lang-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+  font-weight: 700;
+}
+
+/* ==============================================
+   RTL SUPPORT (Arabic)
+   ============================================== */
+
+/* Flip directional layout utilities */
+[dir="rtl"] .header-inner {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .lang-switcher {
+  margin-inline-start: 0;
+  margin-inline-end: auto;
+}
+
+[dir="rtl"] .controls-bar {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .hero-flow {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .hero-arrow svg {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .portfolio-panel-header {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .ticker-hint {
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+}
+
+[dir="rtl"] .portfolio-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .portfolio-actions {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .method-grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .sources-also {
+  direction: rtl;
+}
+
+[dir="rtl"] .portfolio-table {
+  direction: rtl;
+}
+
+[dir="rtl"] .autocomplete-dropdown {
+  text-align: right;
+}
+
+[dir="rtl"] .assumptions-list {
+  padding-right: 1.2rem;
+  padding-left: 0;
+}
+
+/* Arabic font stack — system Arabic fonts first */
+[lang="ar"],
+[lang="ar"] body {
+  font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+[lang="ar"] .header-wordmark {
+  letter-spacing: 0;
+}
+
+[lang="ar"] .method-formula,
+[lang="ar"] .zakat-amount,
+[lang="ar"] .difference-amount {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  direction: ltr;
+  display: inline-block;
 }
