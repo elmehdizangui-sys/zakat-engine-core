@@ -9,143 +9,180 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+  <div class="page-shell">
 
     <!-- HEADER -->
     <header class="site-header">
-      <div class="header-content">
-        <h1>ZakatEngine</h1>
-        <p class="tagline">Two accepted scholarly methods. Different answers. You decide.</p>
-        <p class="sub-tagline">Based on AAOIFI Shariah Standard No. 35 and classical fiqh positions</p>
+      <div class="container">
+        <div class="header-inner">
+          <div class="header-brand">
+            <img src="assets/main-logo.png" alt="ZakatEngine logo" class="header-logo">
+          </div>
+          <div class="header-meta">
+            <p class="header-standard">Based on AAOIFI Shariah Standard No. 35</p>
+          </div>
+        </div>
       </div>
     </header>
 
     <main>
+      <div class="container">
 
-      <!-- INPUT -->
-      <section class="input-section">
-        <div class="input-card">
+        <!-- INPUT -->
+        <section class="input-section">
 
-          <!-- Currency bar -->
-          <div class="currency-bar">
-            <label for="currency-select">Currency</label>
-            <select id="currency-select" onchange="onCurrencyChange()"></select>
-            <span id="rates-note" class="rates-note hidden"></span>
+          <!-- Currency + intention row -->
+          <div class="controls-bar">
+            <div class="control-group">
+              <label class="control-label" for="currency-select">Currency</label>
+              <div class="select-wrap">
+                <select id="currency-select" onchange="onCurrencyChange()"></select>
+              </div>
+              <span id="rates-note" class="rates-note hidden"></span>
+            </div>
+
+            <div class="control-group">
+              <span class="control-label">Investment Intention</span>
+              <div class="intention-toggle" role="group" aria-label="Investment intention">
+                <button class="intention-btn active" data-intention="active" onclick="setIntention('active')">
+                  Active Trading
+                </button>
+                <button class="intention-btn" data-intention="passive" onclick="setIntention('passive')">
+                  Long-Term Passive
+                </button>
+              </div>
+            </div>
           </div>
 
-          <!-- Intention toggle -->
-          <div class="intention-toggle" role="group" aria-label="Investment intention">
-            <button class="intention-btn active" data-intention="active" onclick="setIntention('active')">
-              Active Trading
-            </button>
-            <button class="intention-btn" data-intention="passive" onclick="setIntention('passive')">
-              Long-Term Passive
-            </button>
+          <p class="intention-hint" id="intention-hint-active">Holds for trading / resale — Method A applies as the primary obligation.</p>
+          <p class="intention-hint hidden" id="intention-hint-passive">Holds for long-term growth / dividends — Method B is the scholarly recommendation.</p>
+
+          <!-- Portfolio rows -->
+          <div class="portfolio-panel">
+            <div class="portfolio-panel-header">
+              <h2 class="panel-title">Your Portfolio</h2>
+              <div class="ticker-hint">
+                <span class="ticker-hint-label">Quick fill:</span>
+                <button class="ticker-pill" onclick="pickTicker('AAPL')">AAPL</button>
+                <button class="ticker-pill" onclick="pickTicker('MSFT')">MSFT</button>
+                <button class="ticker-pill" onclick="pickTicker('AMZN')">AMZN</button>
+                <button class="ticker-pill" onclick="pickTicker('GOOGL')">GOOGL</button>
+                <button class="ticker-pill" onclick="pickTicker('META')">META</button>
+                <button class="ticker-pill" onclick="pickTicker('TSLA')">TSLA</button>
+                <button class="ticker-pill" onclick="pickTicker('NVDA')">NVDA</button>
+                <button class="ticker-pill" onclick="pickTicker('JPM')">JPM</button>
+                <span class="ticker-pills-extra" id="ticker-pills-extra">
+                  <button class="ticker-pill" onclick="pickTicker('V')">V</button>
+                  <button class="ticker-pill" onclick="pickTicker('MA')">MA</button>
+                  <button class="ticker-pill" onclick="pickTicker('UNH')">UNH</button>
+                  <button class="ticker-pill" onclick="pickTicker('HD')">HD</button>
+                  <button class="ticker-pill" onclick="pickTicker('XOM')">XOM</button>
+                  <button class="ticker-pill" onclick="pickTicker('BAC')">BAC</button>
+                  <button class="ticker-pill" onclick="pickTicker('PG')">PG</button>
+                  <button class="ticker-pill" onclick="pickTicker('COST')">COST</button>
+                  <button class="ticker-pill" onclick="pickTicker('ABBV')">ABBV</button>
+                  <button class="ticker-pill" onclick="pickTicker('DIS')">DIS</button>
+                  <button class="ticker-pill" onclick="pickTicker('PYPL')">PYPL</button>
+                  <button class="ticker-pill" onclick="pickTicker('UBER')">UBER</button>
+                  <button class="ticker-pill" onclick="pickTicker('CRM')">CRM</button>
+                  <button class="ticker-pill" onclick="pickTicker('INTC')">INTC</button>
+                  <button class="ticker-pill" onclick="pickTicker('BABA')">BABA</button>
+                  <button class="ticker-pill" onclick="pickTicker('BRK.B')">BRK.B</button>
+                </span>
+                <button class="show-more-btn" id="show-more-btn" onclick="toggleMoreTickers()">+ 12 more</button>
+              </div>
+            </div>
+
+            <div id="portfolio-rows"></div>
+
+            <div class="portfolio-actions">
+              <button class="add-row-btn" onclick="addPortfolioRow()">+ Add Stock</button>
+              <button id="calculate-btn" onclick="calculate()">Calculate Zakat</button>
+            </div>
           </div>
-          <p class="intention-hint" id="intention-hint-active">Holds for trading/resale — Method A is primary.</p>
-          <p class="intention-hint hidden" id="intention-hint-passive">Holds for long-term growth/dividends — Method B is recommended.</p>
 
-          <!-- Portfolio rows (rendered by JS) -->
-          <div id="portfolio-rows"></div>
+        </section>
 
-          <!-- Actions -->
-          <div class="portfolio-actions">
-            <button class="add-row-btn" onclick="addPortfolioRow()">+ Add Stock</button>
-            <button id="calculate-btn" onclick="calculate()">Calculate Portfolio Zakat</button>
+        <!-- RESULTS (dynamic) -->
+        <section id="results-section" class="results-section hidden" aria-live="polite"></section>
+
+        <!-- METHODOLOGY -->
+        <section class="methodology-section">
+          <div class="methodology-header">
+            <h2 class="section-title">The Two Methods</h2>
+            <p class="section-sub">Same shares. Same price. Same day. Two valid scholarly positions.</p>
           </div>
 
-          <!-- Ticker chips — first 8 visible, rest toggled -->
-          <div class="ticker-hint">
-            <span class="ticker-hint-label">Quick pick (fills row 1):</span>
-            <button class="ticker-pill" onclick="pickTicker('AAPL')">AAPL</button>
-            <button class="ticker-pill" onclick="pickTicker('MSFT')">MSFT</button>
-            <button class="ticker-pill" onclick="pickTicker('AMZN')">AMZN</button>
-            <button class="ticker-pill" onclick="pickTicker('GOOGL')">GOOGL</button>
-            <button class="ticker-pill" onclick="pickTicker('META')">META</button>
-            <button class="ticker-pill" onclick="pickTicker('TSLA')">TSLA</button>
-            <button class="ticker-pill" onclick="pickTicker('NVDA')">NVDA</button>
-            <button class="ticker-pill" onclick="pickTicker('JPM')">JPM</button>
-            <!-- Extra 12 — toggled -->
-            <span class="ticker-pills-extra" id="ticker-pills-extra">
-              <button class="ticker-pill" onclick="pickTicker('V')">V</button>
-              <button class="ticker-pill" onclick="pickTicker('MA')">MA</button>
-              <button class="ticker-pill" onclick="pickTicker('NFLX')">NFLX</button>
-              <button class="ticker-pill" onclick="pickTicker('AMD')">AMD</button>
-              <button class="ticker-pill" onclick="pickTicker('XOM')">XOM</button>
-              <button class="ticker-pill" onclick="pickTicker('DIS')">DIS</button>
-              <button class="ticker-pill" onclick="pickTicker('PYPL')">PYPL</button>
-              <button class="ticker-pill" onclick="pickTicker('UBER')">UBER</button>
-              <button class="ticker-pill" onclick="pickTicker('CRM')">CRM</button>
-              <button class="ticker-pill" onclick="pickTicker('INTC')">INTC</button>
-              <button class="ticker-pill" onclick="pickTicker('BABA')">BABA</button>
-              <button class="ticker-pill" onclick="pickTicker('BRK.B')">BRK.B</button>
-            </span>
-            <button class="show-more-btn" id="show-more-btn" onclick="toggleMoreTickers()">+ 12 more</button>
+          <div class="method-grid">
+
+            <div class="method-card method-card--a">
+              <div class="method-card-top">
+                <span class="method-badge badge-a">Method A</span>
+                <h3>Market Value</h3>
+                <p class="method-sources">
+                  <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI SS 35</a>
+                  · NZF · Islamic Relief
+                </p>
+              </div>
+              <p>Treats stocks as <strong>trading goods</strong>. Zakat is due on the full market value of the portfolio, regardless of the company's underlying assets.</p>
+              <div class="method-formula">Portfolio Value × 2.5%</div>
+            </div>
+
+            <div class="method-card method-card--b">
+              <div class="method-card-top">
+                <span class="method-badge badge-b">Method B</span>
+                <h3>Underlying Assets</h3>
+                <p class="method-sources">
+                  <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">IFG Guide</a>
+                  · Qaradawi · Hanafi/Shafi'i scholars
+                </p>
+              </div>
+              <p>Treats stocks as <strong>ownership stakes</strong>. Zakat applies only to the company's zakatable assets — cash, inventory, receivables — not the full market value.</p>
+              <div class="method-formula">Portfolio Value × 30% × 2.5%</div>
+              <p class="proxy-note">The 30% is a scholarly proxy when company balance sheet data is unavailable. (IFG, Qaradawi)</p>
+            </div>
+
           </div>
-        </div>
-      </section>
 
-      <!-- RESULTS (dynamic) -->
-      <section id="results-section" class="results-section hidden" aria-live="polite"></section>
+          <div class="key-insight">
+            <p><strong>Why the difference matters:</strong> Method A always yields significantly more than Method B. Most online calculators only show you one method. ZakatEngine shows both so you can make an informed decision — or consult a scholar.</p>
+          </div>
 
-      <!-- METHODOLOGY -->
-      <section class="methodology-section">
-        <h2>The Two Methods</h2>
-        <div class="method-grid">
-
-          <div class="method-card">
-            <span class="method-badge badge-a">Method A</span>
-            <h3>Market Value</h3>
-            <p class="method-sources">
-              <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI SS 35</a>
-              · NZF · Islamic Relief
+          <div class="sources-box">
+            <h4 class="sources-title">Primary Sources</h4>
+            <ul class="references-list">
+              <li>
+                <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI — Shariah Standard No. 35: Zakat &amp; Standard No. 21: Financial Papers</a>
+              </li>
+              <li><a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">Islamic Finance Guru — Zakat on Shares</a></li>
+              <li><a href="https://www.zakat.org" target="_blank" rel="noopener">National Zakat Foundation</a></li>
+            </ul>
+            <p class="sources-also">See also:
+              <a href="https://islamqa.info/en/answers/93793" target="_blank" rel="noopener">IslamQA on stocks</a> ·
+              <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">IFG detailed guide</a>
             </p>
-            <p>Treats stocks as <strong>trading goods</strong>. Zakat is calculated on the full market value of the portfolio, regardless of what the company owns.</p>
           </div>
+        </section>
 
-          <div class="method-card">
-            <span class="method-badge badge-b">Method B</span>
-            <h3>Underlying Assets</h3>
-            <p class="method-sources">
-              <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">IFG Guide</a>
-              · Qaradawi · Hanafi/Shafi'i scholars
-            </p>
-            <p>Treats stocks as <strong>ownership stakes</strong>. Zakat is calculated only on the company's zakatable assets (cash, inventory, receivables), not the full market value.</p>
-            <p class="proxy-note">The 30% is a scholarly proxy for zakatable assets when company balance sheet data is unavailable. (Source: IFG, Qaradawi)</p>
-          </div>
-
-        </div>
-
-        <div class="key-insight">
-          <p><strong>The key insight:</strong> Same shares. Same price. Same day. Two valid scholarly methods. Method A always yields 233% more than Method B. Most online calculators only show you one.</p>
-        </div>
-
-        <div class="sources-box">
-          <h4>Sources</h4>
-          <ul>
-            <li>
-              <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI — Accounting and Auditing Organisation for Islamic Financial Institutions</a>
-              · Shariah Standard No. 35: Zakat; Shariah Standard No. 21: Financial Papers
-            </li>
-            <li><a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">Islamic Finance Guru — Zakat on Shares</a></li>
-            <li><a href="https://www.zakat.org" target="_blank" rel="noopener">National Zakat Foundation</a></li>
-          </ul>
-          <p>See also:
-            <a href="https://islamqa.info/en/answers/93793" target="_blank" rel="noopener">IslamQA on stocks</a> ·
-            <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener">IFG detailed guide</a>
-          </p>
-        </div>
-      </section>
-
+      </div><!-- /container -->
     </main>
 
     <footer class="site-footer">
-      <p>Built by <strong>Elmehdi Zangui</strong> · Senior Software Engineer</p>
-      <p>Educational purposes only. This is not a fatwa. Consult a qualified scholar for your situation.</p>
-      <p>Based on <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">AAOIFI Shariah Standard No. 35</a> and classical fiqh positions</p>
+      <div class="container">
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <img src="assets/main-logo.png" alt="ZakatEngine" class="footer-logo">
+          </div>
+          <div class="footer-copy">
+            <p>Built by <strong>Elmehdi Zangui</strong> · Senior Software Engineer</p>
+            <p class="footer-disclaimer">Educational purposes only. This is not a fatwa. Consult a qualified scholar for your specific situation.</p>
+            <p class="footer-standard">Based on <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI Shariah Standard No. 35</a> and classical fiqh positions</p>
+          </div>
+        </div>
+      </div>
     </footer>
 
-  </div>
+  </div><!-- /page-shell -->
   <script src="app.js"></script>
 </body>
 </html>
