@@ -360,7 +360,7 @@ async function calculate() {
     if (!ticker) { showError('One of your rows is missing a ticker symbol.'); return; }
     const shares = parseFloat(sharesRaw);
     if (!sharesRaw || isNaN(shares) || shares <= 0) {
-      showError(`Please enter a valid number of shares for <strong>${escapeHtml(ticker)}</strong>.`);
+      showErrorHtml(`Please enter a valid number of shares for <strong>${escapeHtml(ticker)}</strong>.`);
       return;
     }
   }
@@ -580,11 +580,26 @@ function renderPortfolioResults(stocks, currencyCode, intention) {
 }
 
 // --- Error ---
+// Accepts plain text only; use showErrorHtml for pre-escaped HTML fragments.
 
 function showError(message) {
   const el = document.getElementById('results-section');
   el.classList.remove('hidden');
-  el.innerHTML = `<div class="error-box"><strong>Error:</strong> ${message}</div>`;
+  const box = document.createElement('div');
+  box.className = 'error-box';
+  const label = document.createElement('strong');
+  label.textContent = 'Error: ';
+  box.appendChild(label);
+  box.appendChild(document.createTextNode(message));
+  el.replaceChildren(box);
+  const btn = document.getElementById('calculate-btn');
+  if (btn) { btn.disabled = false; btn.textContent = 'Calculate Portfolio Zakat'; }
+}
+
+function showErrorHtml(htmlFragment) {
+  const el = document.getElementById('results-section');
+  el.classList.remove('hidden');
+  el.innerHTML = `<div class="error-box"><strong>Error:</strong> ${htmlFragment}</div>`;
   const btn = document.getElementById('calculate-btn');
   if (btn) { btn.disabled = false; btn.textContent = 'Calculate Portfolio Zakat'; }
 }
