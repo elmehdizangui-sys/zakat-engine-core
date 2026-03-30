@@ -1,5 +1,5 @@
 /* ==============================================
-   ZakatEngine — i18n Translation Layer
+   Zakat Al-Mall — i18n Translation Layer
    Supported: en, fr, ar (RTL)
    ============================================== */
 
@@ -7,14 +7,14 @@ const TRANSLATIONS = {
 
   en: {
     // Page meta
-    pageTitle: 'ZakatEngine — Stock Zakat Calculator',
+    pageTitle: 'Zakat Al-Mall — Stock Zakat Calculator',
 
     // Header
     headerStandard: 'Based on AAOIFI Shariah Standard No. 35',
 
     // Hero
     heroNode1Label: 'Your Stock Portfolio',
-    heroNode2Label: 'ZakatEngine',
+    heroNode2Label: 'Zakat Al-Mall',
     heroChipLabelA: 'Method A · Full Market Value',
     heroChipLabelB: 'Method B · 30% Proxy',
     heroCaption: 'Same portfolio. Two valid scholarly methods. See the difference.',
@@ -108,7 +108,8 @@ const TRANSLATIONS = {
     errInvalidShares: (ticker) => `Please enter a valid number of shares for <strong>${ticker}</strong>.`,
 
     // Methodology section
-    methodologyTitle: 'The Two Methods',
+    methodologyTitle: 'The Three Methods',
+    methodCCardBody: 'For <strong>long-term passive investors</strong> who do not intend to sell. Some scholars hold that only received dividends are zakatable — not the full market value of shares.',
     methodologySub: 'Same shares. Same price. Same day. Two valid scholarly positions.',
     methodACardLabel: 'Method A — Full Market Value',
     methodACardTitle: 'Treat Stocks as Trading Goods',
@@ -122,9 +123,10 @@ const TRANSLATIONS = {
     methodBScholars: '· AAOIFI Standard No. 35 · IFG',
     proxyNote: 'The 30% is a scholarly proxy when company balance sheet data is unavailable. (IFG, Qaradawi)',
     keyInsightTitle: 'Why the difference matters:',
-    keyInsightBody: 'Method A always yields significantly more than Method B. Most online calculators only show you one method. ZakatEngine shows both so you can make an informed decision — or consult a scholar.',
+    keyInsightBody: 'Method A always yields significantly more than Method B. Most online calculators only show you one method. Zakat Al-Mall shows all three so you can make an informed decision — or consult a scholar.',
 
     // Sources
+    sourcesLabel: 'Sources:',
     sourcesTitle: 'Sources & Further Reading',
     sourceNZF: 'National Zakat Foundation',
     sourceIFG: 'Islamic Finance Guru — Zakat on Shares',
@@ -137,15 +139,100 @@ const TRANSLATIONS = {
     footerAuthor: 'Elmehdi Zangui',
     footerDisclaimer: 'Educational purposes only. This is not a fatwa. Consult a qualified scholar for your specific situation.',
     footerStandard: 'Based on AAOIFI Shariah Standard No. 35 and classical fiqh positions',
+    footerNote: 'Zakat Al-Mall is educational — always verify with a qualified scholar.',
+
+    // Hero
+    heroTitle: 'Calculate Zakat on Stocks',
+    heroCaption: 'Same portfolio. Two scholarly methods. You decide.',
+
+    // Holdings panel
+    btnAddHolding: 'Add Holding',
+    emptyHoldings: 'No holdings yet — add a stock above to get started.',
+    thHolding: 'Holding',
+    thStrategy: 'Strategy',
+    thShares: 'Shares',
+    thPrice: 'Price',
+    thValue: 'Value',
+    longTerm: 'Long-term',
+    shortTerm: 'Short-term',
+
+    // Results
+    totalZakatDue: 'Total zakat due',
+    nisabNoticePrefix: 'Portfolio is below the nisab threshold of',
+    nisabNoticeSuffix: 'Zakat is not yet obligatory.',
+    shortTermHoldings: 'Short-term holdings',
+    longTermHoldings: 'Long-term holdings',
+    methodAShort: 'Method A · Full market value',
+    methodBLong: 'Method B · Zakatable assets 30%',
+    thZakatLiable: 'Zakat Liable',
+    thZakatDue: 'Zakat Due',
+    shortTermTotal: 'Short-term subtotal',
+    longTermTotal: 'Long-term subtotal',
+    shareLabel: 'Share this calculator',
+
+    // Method cards
+    methodABadge: 'Method A',
+    methodBBadge: 'Method B',
+    sourceAAOIFI: 'AAOIFI Standard 35',
+
+    // Modal
+    modalTitle: 'Add a Holding',
+    modalSymbolLabel: 'Symbol',
+    modalPriceLabel: 'Price per share',
+    modalSharesLabel: 'Shares',
+    modalPeriodLabel: 'Holding period',
+    modalCancel: 'Cancel',
+    modalAdd: 'Add Holding',
+
+    // Persona selector
+    personaLabel: 'Which best describes your relationship with these stocks?',
+    personaSpeculatorName: 'The Speculator',
+    personaSpeculatorDesc: 'I trade frequently or hold < 12 months',
+    personaSpeculatorMethod: 'Method A applies',
+    personaPassiveName: 'The Passive Owner',
+    personaPassiveDesc: 'I hold long-term for growth',
+    personaPassiveMethod: 'Method B applies',
+    personaLegacyName: 'The Legacy Builder',
+    personaLegacyDesc: 'I live off dividends, rarely trade',
+    personaLegacyMethod: 'Method C applies',
+
+    // Spectrum
+    spectrumTitle: 'The Methodology Spectrum',
+    spectrumCaption: 'Same portfolio · Three scholarly interpretations · You decide',
+    yourObligation: 'Your obligation',
+    eqLabel: 'Formula:',
+    methodACardDesc: 'Treats shares as trading goods. The full market value of your portfolio is zakatable.',
+    methodBCardDesc: 'Treats shares as ownership. Only liquid assets (cash, receivables, inventory) — approximated at 30% — are zakatable.',
+    methodCBadge: 'Method C',
+    methodCTitle: 'Dividends Only',
+    methodCCardDesc: 'Some scholars hold only received dividends are zakatable for long-term passive investors who do not intend to sell.',
+    dividendLabel: 'Annual dividends received',
+    vsLabel: 'vs',
+    gapLabel: 'Difference:',
+
+    // Hawl Clock
+    hawlTitle: 'Hawl Clock',
+    hawlDesc: 'One lunar year (354 days) must pass after your portfolio reaches nisab before zakat becomes obligatory.',
+    hawlDateLabel: 'When did your portfolio first reach nisab',
+    gapCaption: (val) => `${val} portfolio · same stocks · same day · two valid scholarly positions`,
+    hawlCycleInProgress: (n) => `${n}${n===1?'st':n===2?'nd':n===3?'rd':'th'} Hawl in progress`,
+    hawlDueBadge: 'Due Now',
+    hawlStatusDue: (date, extra) => `Zakat is due — hawl was completed on ${date}${extra}.`,
+    hawlStatusOverdue: (n) => ` (${n} hawls overdue)`,
+    hawlStatusPending: (days, date) => `${days} day${days!==1?'s':''} remaining until hawl completes (${date})`,
+    livePriceLabel: '✓ Live price',
+    cachedPriceLabel: (date) => `~ Cached · ${date}`,
+    gapPctText: (pct) => `That's a ${pct}% difference based on methodology alone.`,
+    methodCHintText: (low, high) => `Based on ~2–4% average yield, estimate: ${low} – ${high}`,
   },
 
   fr: {
-    pageTitle: 'ZakatEngine — Calculateur de Zakat sur Actions',
+    pageTitle: 'Zakat Al-Mall — Calculateur de Zakat sur Actions',
 
     headerStandard: 'Basé sur la norme AAOIFI n° 35',
 
     heroNode1Label: 'Votre Portefeuille d\'Actions',
-    heroNode2Label: 'ZakatEngine',
+    heroNode2Label: 'Zakat Al-Mall',
     heroChipLabelA: 'Méthode A · Valeur de marché',
     heroChipLabelB: 'Méthode B · Proxy 30%',
     heroCaption: 'Même portefeuille. Deux méthodes savantes valides. Comparez.',
@@ -226,7 +313,8 @@ const TRANSLATIONS = {
     errMissingTicker: 'Une de vos lignes est manquante un symbole boursier.',
     errInvalidShares: (ticker) => `Veuillez saisir un nombre d\'actions valide pour <strong>${ticker}</strong>.`,
 
-    methodologyTitle: 'Les Deux Méthodes',
+    methodologyTitle: 'Les Trois Méthodes',
+    methodCCardBody: 'Pour les <strong>investisseurs passifs à long terme</strong> qui n\'ont pas l\'intention de vendre. Certains savants estiment que seuls les dividendes reçus sont zakatable.',
     methodologySub: 'Mêmes actions. Même prix. Même jour. Deux positions savantes valides.',
     methodACardLabel: 'Méthode A — Valeur de Marché Totale',
     methodACardTitle: 'Traiter les Actions comme Marchandises',
@@ -240,8 +328,9 @@ const TRANSLATIONS = {
     methodBScholars: '· Norme AAOIFI n° 35 · IFG',
     proxyNote: 'Les 30% sont un proxy savant lorsque les données du bilan n\'sont pas disponibles. (IFG, Qaradawi)',
     keyInsightTitle: 'Pourquoi la différence est importante :',
-    keyInsightBody: 'La Méthode A produit toujours significativement plus que la Méthode B. La plupart des calculateurs en ligne ne montrent qu\'une seule méthode. ZakatEngine montre les deux pour vous permettre de prendre une décision éclairée — ou de consulter un érudit.',
+    keyInsightBody: 'La Méthode A produit toujours significativement plus que la Méthode B. La plupart des calculateurs en ligne ne montrent qu\'une seule méthode. Zakat Al-Mall montre les trois pour vous permettre de prendre une décision éclairée — ou de consulter un érudit.',
 
+    sourcesLabel: 'Sources :',
     sourcesTitle: 'Sources et Lectures Complémentaires',
     sourceNZF: 'Fondation Nationale de la Zakat',
     sourceIFG: 'Islamic Finance Guru — Zakat sur les Actions',
@@ -253,15 +342,95 @@ const TRANSLATIONS = {
     footerAuthor: 'Elmehdi Zangui',
     footerDisclaimer: 'À des fins éducatives uniquement. Ce n\'est pas une fatwa. Consultez un érudit qualifié pour votre situation spécifique.',
     footerStandard: 'Basé sur la norme AAOIFI n° 35 et les positions du fiqh classique',
+    footerNote: 'Zakat Al-Mall est éducatif — vérifiez toujours avec un érudit qualifié.',
+
+    heroTitle: 'Calculer la Zakat sur les Actions',
+    heroCaption: 'Même portefeuille. Deux méthodes savantes valides. Comparez.',
+
+    btnAddHolding: 'Ajouter',
+    emptyHoldings: 'Aucune position — ajoutez une action pour commencer.',
+    thHolding: 'Position',
+    thStrategy: 'Stratégie',
+    thShares: 'Actions',
+    thPrice: 'Prix',
+    thValue: 'Valeur',
+    longTerm: 'Long terme',
+    shortTerm: 'Court terme',
+
+    totalZakatDue: 'Zakat totale due',
+    nisabNoticePrefix: 'Le portefeuille est en dessous du seuil du nisab de',
+    nisabNoticeSuffix: 'La zakat n\'est pas encore obligatoire.',
+    shortTermHoldings: 'Positions court terme',
+    longTermHoldings: 'Positions long terme',
+    methodAShort: 'Méthode A · Valeur de marché totale',
+    methodBLong: 'Méthode B · Actifs zakatable 30%',
+    thZakatLiable: 'Montant zakatable',
+    thZakatDue: 'Zakat due',
+    shortTermTotal: 'Sous-total court terme',
+    longTermTotal: 'Sous-total long terme',
+    shareLabel: 'Partager ce calculateur',
+
+    methodABadge: 'Méthode A',
+    methodBBadge: 'Méthode B',
+    sourceAAOIFI: 'Norme AAOIFI 35',
+
+    modalTitle: 'Ajouter une position',
+    modalSymbolLabel: 'Symbole',
+    modalPriceLabel: 'Prix par action',
+    modalSharesLabel: 'Nombre d\'actions',
+    modalPeriodLabel: 'Durée de détention',
+    modalCancel: 'Annuler',
+    modalAdd: 'Ajouter',
+
+    // Persona selector
+    personaLabel: 'Comment décririez-vous votre relation avec ces actions ?',
+    personaSpeculatorName: 'Le Spéculateur',
+    personaSpeculatorDesc: 'Je trade fréquemment ou détiens < 12 mois',
+    personaSpeculatorMethod: 'Méthode A applicable',
+    personaPassiveName: 'Le Propriétaire Passif',
+    personaPassiveDesc: 'Je détiens à long terme pour la croissance',
+    personaPassiveMethod: 'Méthode B applicable',
+    personaLegacyName: 'Le Bâtisseur de Patrimoine',
+    personaLegacyDesc: 'Je vis de dividendes, je trade rarement',
+    personaLegacyMethod: 'Méthode C applicable',
+
+    // Spectrum
+    spectrumTitle: 'Le Spectre Méthodologique',
+    spectrumCaption: 'Même portefeuille · Trois interprétations savantes · Vous décidez',
+    yourObligation: 'Votre obligation',
+    eqLabel: 'Formule :',
+    methodACardDesc: 'Traite les actions comme des biens commerciaux. La valeur de marché totale est zakatable.',
+    methodBCardDesc: 'Traite les actions comme une participation. Seuls les actifs liquides (30%) sont zakatable.',
+    methodCBadge: 'Méthode C',
+    methodCTitle: 'Dividendes uniquement',
+    methodCCardDesc: "Certains savants soutiennent que seuls les dividendes reçus sont zakatable pour les investisseurs passifs à long terme.",
+    dividendLabel: 'Dividendes annuels reçus',
+    vsLabel: 'vs',
+    gapLabel: 'Différence :',
+
+    // Hawl Clock
+    hawlTitle: 'Horloge du Hawl',
+    hawlDesc: "Une année lunaire (354 jours) doit s'écouler après que le portefeuille atteint le nisab avant que la zakat devienne obligatoire.",
+    hawlDateLabel: 'Quand votre portefeuille a-t-il atteint le nisab',
+    gapCaption: (val) => `${val} portefeuille · mêmes actions · même jour · deux positions scientifiques valides`,
+    hawlCycleInProgress: (n) => `${n}${n===1?'er':'ème'} Hawl en cours`,
+    hawlDueBadge: 'Dû Maintenant',
+    hawlStatusDue: (date, extra) => `Zakat due — hawl complété le ${date}${extra}.`,
+    hawlStatusOverdue: (n) => ` (${n} hawls en retard)`,
+    hawlStatusPending: (days, date) => `${days} jour${days!==1?'s':''} restant${days!==1?'s':''} (${date})`,
+    livePriceLabel: '✓ Prix en direct',
+    cachedPriceLabel: (date) => `~ Mis en cache · ${date}`,
+    gapPctText: (pct) => `C'est une différence de ${pct}% basée uniquement sur la méthodologie.`,
+    methodCHintText: (low, high) => `Basé sur un rendement moyen de ~2–4%, estimation: ${low} – ${high}`,
   },
 
   ar: {
-    pageTitle: 'ZakatEngine — حاسبة زكاة الأسهم',
+    pageTitle: 'زكاة المال — حاسبة زكاة الأسهم',
 
     headerStandard: 'وفقاً لمعيار هيئة المحاسبة والمراجعة للمؤسسات المالية الإسلامية رقم 35',
 
     heroNode1Label: 'محفظتك الاستثمارية',
-    heroNode2Label: 'ZakatEngine',
+    heroNode2Label: 'Zakat Al-Mall',
     heroChipLabelA: 'الطريقة أ · القيمة السوقية الكاملة',
     heroChipLabelB: 'الطريقة ب · وكيل 30%',
     heroCaption: 'نفس المحفظة. طريقتان علميتان معتمدتان. قارن الفرق.',
@@ -342,7 +511,8 @@ const TRANSLATIONS = {
     errMissingTicker: 'إحدى صفوفك تفتقر إلى رمز السهم.',
     errInvalidShares: (ticker) => `يرجى إدخال عدد أسهم صحيح لـ <strong>${ticker}</strong>.`,
 
-    methodologyTitle: 'الطريقتان',
+    methodologyTitle: 'الطرق الثلاث',
+    methodCCardBody: 'للمستثمرين السلبيين طويلي الأمد الذين لا ينوون البيع. يرى بعض العلماء أن الزكاة تجب فقط في <strong>الأرباح الموزعة المستلمة</strong> — لا في القيمة السوقية الكاملة للأسهم.',
     methodologySub: 'نفس الأسهم. نفس السعر. نفس اليوم. موقفان علميان معتمدان.',
     methodACardLabel: 'الطريقة أ — القيمة السوقية الكاملة',
     methodACardTitle: 'معاملة الأسهم كسلع تجارية',
@@ -356,8 +526,9 @@ const TRANSLATIONS = {
     methodBScholars: '· معيار AAOIFI رقم 35 · IFG',
     proxyNote: 'نسبة 30% هي وكيل فقهي عند عدم توفر بيانات الميزانية. (IFG، القرضاوي)',
     keyInsightTitle: 'لماذا يهم الفرق:',
-    keyInsightBody: 'الطريقة أ تنتج دائماً أكثر بشكل ملحوظ من الطريقة ب. معظم الحاسبات الإلكترونية تُظهر طريقة واحدة فقط. يُظهر ZakatEngine الطريقتين لتتخذ قراراً مستنيراً — أو تستشير عالماً.',
+    keyInsightBody: 'الطريقة أ تنتج دائماً أكثر بشكل ملحوظ من الطريقة ب. معظم الحاسبات الإلكترونية تُظهر طريقة واحدة فقط. تُظهر زكاة المال الطرق الثلاث لتتخذ قراراً مستنيراً — أو تستشير عالماً.',
 
+    sourcesLabel: 'المصادر:',
     sourcesTitle: 'المصادر وقراءات إضافية',
     sourceNZF: 'المؤسسة الوطنية للزكاة',
     sourceIFG: 'Islamic Finance Guru — زكاة الأسهم',
@@ -369,6 +540,86 @@ const TRANSLATIONS = {
     footerAuthor: 'المهدي الزنكوي',
     footerDisclaimer: 'لأغراض تعليمية فقط. هذا ليس فتوى. استشر عالماً مؤهلاً لحالتك الخاصة.',
     footerStandard: 'استناداً إلى معيار AAOIFI رقم 35 ومواقف الفقه الكلاسيكي',
+    footerNote: 'زكاة المال أداة تعليمية — تحقق دائماً مع عالم مؤهل.',
+
+    heroTitle: 'احسب زكاة الأسهم',
+    heroCaption: 'نفس المحفظة. طريقتان علميتان معتمدتان. قارن الفرق.',
+
+    btnAddHolding: 'إضافة ورقة مالية',
+    emptyHoldings: 'لا توجد أوراق مالية — أضف سهماً للبدء.',
+    thHolding: 'الورقة المالية',
+    thStrategy: 'الاستراتيجية',
+    thShares: 'الأسهم',
+    thPrice: 'السعر',
+    thValue: 'القيمة',
+    longTerm: 'طويل الأمد',
+    shortTerm: 'قصير الأمد',
+
+    totalZakatDue: 'إجمالي الزكاة المستحقة',
+    nisabNoticePrefix: 'المحفظة أقل من عتبة النصاب البالغة',
+    nisabNoticeSuffix: 'الزكاة غير واجبة بعد.',
+    shortTermHoldings: 'الأوراق المالية قصيرة الأمد',
+    longTermHoldings: 'الأوراق المالية طويلة الأمد',
+    methodAShort: 'الطريقة أ · القيمة السوقية الكاملة',
+    methodBLong: 'الطريقة ب · الأصول الزكوية 30%',
+    thZakatLiable: 'الوعاء الزكوي',
+    thZakatDue: 'الزكاة المستحقة',
+    shortTermTotal: 'مجموع قصير الأمد',
+    longTermTotal: 'مجموع طويل الأمد',
+    shareLabel: 'شارك هذه الآلة الحاسبة',
+
+    methodABadge: 'الطريقة أ',
+    methodBBadge: 'الطريقة ب',
+    sourceAAOIFI: 'معيار AAOIFI رقم 35',
+
+    modalTitle: 'إضافة ورقة مالية',
+    modalSymbolLabel: 'الرمز',
+    modalPriceLabel: 'سعر السهم',
+    modalSharesLabel: 'عدد الأسهم',
+    modalPeriodLabel: 'مدة الاحتفاظ',
+    modalCancel: 'إلغاء',
+    modalAdd: 'إضافة',
+
+    // Persona selector
+    personaLabel: 'ما الذي يصف علاقتك بهذه الأسهم؟',
+    personaSpeculatorName: 'المضارب / المتاجر',
+    personaSpeculatorDesc: 'أتداول كثيراً أو أحتفظ أقل من 12 شهراً',
+    personaSpeculatorMethod: 'الطريقة أ تنطبق',
+    personaPassiveName: 'المستثمر طويل الأمد',
+    personaPassiveDesc: 'أحتفظ بالأسهم طويل الأمد للنمو',
+    personaPassiveMethod: 'الطريقة ب تنطبق',
+    personaLegacyName: 'مستثمر الأجيال',
+    personaLegacyDesc: 'أعيش على الأرباح، نادراً ما أتداول',
+    personaLegacyMethod: 'الطريقة ج تنطبق',
+
+    // Spectrum
+    spectrumTitle: 'الطيف المنهجي',
+    spectrumCaption: 'نفس المحفظة · ثلاثة تفسيرات فقهية · أنت تقرر',
+    yourObligation: 'التزامك',
+    eqLabel: 'الصيغة:',
+    methodACardDesc: 'تعامل الأسهم كبضاعة تجارية. القيمة السوقية الكاملة وعاء للزكاة.',
+    methodBCardDesc: 'تعامل الأسهم كحصة ملكية. الموجودات الزكوية فقط (تقديراً فقهياً: 30%) هي الوعاء الزكوي.',
+    methodCBadge: 'الطريقة ج',
+    methodCTitle: 'الأرباح فقط',
+    methodCCardDesc: 'يرى بعض العلماء أن المستثمر السلبي طويل الأمد لا تجب عليه الزكاة إلا في الأرباح الموزعة.',
+    dividendLabel: 'الأرباح السنوية المستلمة',
+    vsLabel: 'مقابل',
+    gapLabel: 'الفرق:',
+
+    // Hawl Clock
+    hawlTitle: 'ساعة الحول',
+    hawlDesc: 'يجب أن يمر حول كامل (354 يوماً) بعد بلوغ النصاب قبل وجوب الزكاة.',
+    hawlDateLabel: 'متى بلغت محفظتك النصاب',
+    gapCaption: (val) => `محفظة ${val} · نفس الأسهم · نفس اليوم · موقفان فقهيان معتمدان`,
+    hawlCycleInProgress: (n) => `الحول ${n === 1 ? 'الأول' : n === 2 ? 'الثاني' : n === 3 ? 'الثالث' : n} جارٍ`,
+    hawlDueBadge: 'الزكاة واجبة',
+    hawlStatusDue: (date, extra) => `اكتمل الحول — تجب الزكاة الآن (${date})${extra}.`,
+    hawlStatusOverdue: (n) => ` · ${n} أحوال متأخرة`,
+    hawlStatusPending: (days, date) => `${days} يوم${days !== 1 ? 'اً' : ''} متبقٍ حتى اكتمال الحول (${date})`,
+    livePriceLabel: '✓ السعر المباشر',
+    cachedPriceLabel: (date) => `~ مخزّن · ${date}`,
+    gapPctText: (pct) => `هذا فرق بنسبة ${pct}% بسبب اختلاف المنهجية وحدها.`,
+    methodCHintText: (low, high) => `بناءً على عائد توزيعات ~2–4%، التقدير: ${low} – ${high}`,
   },
 };
 
@@ -453,28 +704,17 @@ function setLanguage(lang) {
   applyDirection();
   applyTranslations();
 
-  // Re-render dynamic portfolio rows labels (Ticker / Shares labels inside rows)
-  document.querySelectorAll('.portfolio-row').forEach(row => {
-    const tickerLabel = row.querySelector('.ticker-wrapper label');
-    const sharesLabel = row.querySelector('.shares-wrapper label');
-    const removeBtn   = row.querySelector('.remove-row-btn');
-    if (tickerLabel) tickerLabel.textContent = t('labelTicker');
-    if (sharesLabel) sharesLabel.textContent = t('labelShares');
-    if (removeBtn) {
-      removeBtn.title = t('removeRowTitle');
-      removeBtn.setAttribute('aria-label', t('removeRowAriaLabel'));
-    }
-  });
+  // Sync lang attribute on date input so browser picker respects locale
+  const dateInput = document.getElementById('hawl-date-input');
+  if (dateInput) dateInput.lang = lang;
 
-  // Re-render results if visible
+  // Re-render holdings table and results (V2 app)
+  if (typeof renderHoldingsTable === 'function') renderHoldingsTable();
+
   const resultsEl = document.getElementById('results-section');
-  if (resultsEl && !resultsEl.classList.contains('hidden') && resultsEl._lastStocks) {
-    // renderPortfolioResults is defined in app.js; call it
-    if (typeof renderPortfolioResults === 'function') {
-      const currency = typeof getSelectedCurrency === 'function' ? getSelectedCurrency() : 'USD';
-      const intention = typeof currentIntention !== 'undefined' ? currentIntention : 'active';
-      renderPortfolioResults(resultsEl._lastStocks, currency, intention);
-    }
+  if (resultsEl && !resultsEl.classList.contains('hidden')) {
+    if (typeof renderSpectrum === 'function') renderSpectrum();
+    if (typeof updateHawlClock === 'function') updateHawlClock();
   }
 
   // Update show-more button text
@@ -490,3 +730,6 @@ function setLanguage(lang) {
     calcBtn.textContent = t('btnCalculate');
   }
 }
+
+// Alias for HTML onclick handlers
+function setLang(lang) { setLanguage(lang); }

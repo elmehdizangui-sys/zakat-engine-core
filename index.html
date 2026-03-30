@@ -3,243 +3,397 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZakatEngine — Stock Zakat Calculator</title>
-  <meta name="description" content="Two accepted scholarly methods for calculating zakat on stocks. Same portfolio. Different answers. You decide.">
+  <title>Zakat Al-Mall — Stock Zakat Calculator</title>
+  <meta name="description" content="Three scholarly methods for calculating zakat on stocks. Same portfolio. Different answers. The gap is the debate.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src https://api.allorigins.win https://query1.finance.yahoo.com">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page-shell">
 
-    <!-- HEADER -->
-    <header class="site-header">
-      <div class="container">
-        <div class="header-inner">
-          <div class="header-brand">
-            <span class="header-wordmark">ZakatEngine</span>
-          </div>
-          <div class="header-meta">
-            <p class="header-standard" data-i18n="headerStandard">Based on AAOIFI Shariah Standard No. 35</p>
-          </div>
-          <!-- Language Switcher -->
-          <div id="lang-switcher" class="lang-switcher" aria-label="Language selector">
-            <button class="lang-btn" data-lang="en" onclick="setLanguage('en')">EN</button>
-            <span class="lang-divider">|</span>
-            <button class="lang-btn" data-lang="ar" onclick="setLanguage('ar')">ع</button>
-          </div>
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#c9973a" opacity="0.15"/>
+          <path d="M16 6 L26 11 L26 21 L16 26 L6 21 L6 11 Z" fill="none" stroke="#c9973a" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="4" fill="#c9973a"/>
+        </svg>
+        <div class="brand-text">
+          <span class="brand-name">Zakat Al-Mall</span>
+          <span class="brand-sub" data-i18n="headerStandard">AAOIFI Standard 35</span>
         </div>
       </div>
-    </header>
-
-    <!-- HERO EXPLAINER -->
-    <section class="hero-explainer" aria-label="How ZakatEngine works">
-      <div class="container">
-        <div class="hero-flow">
-
-          <!-- Node 1: Portfolio -->
-          <div class="hero-node">
-            <div class="hero-icon-wrap">
-              <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="7" width="20" height="14" rx="2"/>
-                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
-                <line x1="12" y1="12" x2="12" y2="16"/>
-                <line x1="10" y1="14" x2="14" y2="14"/>
-              </svg>
-            </div>
-            <p class="hero-node-label" data-i18n="heroNode1Label">Your Stock Portfolio</p>
-          </div>
-
-          <!-- Arrow -->
-          <div class="hero-arrow" aria-hidden="true">
-            <svg viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 8 H32 M28 3 L38 8 L28 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-
-          <!-- Node 2: Engine -->
-          <div class="hero-node hero-node--engine">
-            <div class="hero-icon-wrap hero-icon-wrap--engine">
-              <svg class="hero-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-              </svg>
-            </div>
-            <p class="hero-node-label hero-node-label--engine" data-i18n="heroNode2Label">ZakatEngine</p>
-          </div>
-
-          <!-- Arrow -->
-          <div class="hero-arrow" aria-hidden="true">
-            <svg viewBox="0 0 40 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0 8 H32 M28 3 L38 8 L28 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-
-          <!-- Node 3: Results -->
-          <div class="hero-node">
-            <div class="hero-chips">
-              <div class="hero-chip hero-chip--a">
-                <span class="hero-chip-label" data-i18n="heroChipLabelA">Method A · Full Market Value</span>
-                <span class="hero-chip-amount">$1,240</span>
-              </div>
-              <div class="hero-chip hero-chip--b">
-                <span class="hero-chip-label" data-i18n="heroChipLabelB">Method B · 30% Proxy</span>
-                <span class="hero-chip-amount">$372</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <p class="hero-caption"><em data-i18n="heroCaption">Same portfolio. Two valid scholarly methods. See the difference.</em></p>
-      </div>
-    </section>
-
-    <main>
-      <div class="container">
-
-        <!-- INPUT -->
-        <section class="input-section">
-
-          <!-- Currency + intention row -->
-          <div class="controls-bar">
-            <div class="control-group">
-              <label class="control-label" for="currency-select" data-i18n="labelCurrency">Currency</label>
-              <div class="select-wrap">
-                <select id="currency-select" onchange="onCurrencyChange()"></select>
-              </div>
-              <span id="rates-note" class="rates-note hidden"></span>
-            </div>
-
-            <div class="control-group">
-              <span class="control-label" data-i18n="labelIntention">Investment Intention</span>
-              <div class="intention-toggle" role="group" aria-label="Investment intention">
-                <button class="intention-btn active" data-intention="active" onclick="setIntention('active')" data-i18n="btnIntentionActive">
-                  Active Trading
-                </button>
-                <button class="intention-btn" data-intention="passive" onclick="setIntention('passive')" data-i18n="btnIntentionPassive">
-                  Long-Term Passive
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <p class="intention-hint" id="intention-hint-active" data-i18n="hintActive">Holds for trading / resale — Method A applies as the primary obligation.</p>
-          <p class="intention-hint hidden" id="intention-hint-passive" data-i18n="hintPassive">Holds for long-term growth / dividends — Method B is the scholarly recommendation.</p>
-
-          <!-- Portfolio rows -->
-          <div class="portfolio-panel">
-            <div class="portfolio-panel-header">
-              <h2 class="panel-title" data-i18n="panelTitle">Your Portfolio</h2>
-              <div class="ticker-hint">
-                <span class="ticker-hint-label" data-i18n="quickFill">Quick fill:</span>
-                <button class="ticker-pill" onclick="pickTicker('AAPL')">AAPL</button>
-                <button class="ticker-pill" onclick="pickTicker('MSFT')">MSFT</button>
-                <button class="ticker-pill" onclick="pickTicker('AMZN')">AMZN</button>
-                <button class="ticker-pill" onclick="pickTicker('GOOGL')">GOOGL</button>
-                <button class="ticker-pill" onclick="pickTicker('META')">META</button>
-                <button class="ticker-pill" onclick="pickTicker('TSLA')">TSLA</button>
-                <button class="ticker-pill" onclick="pickTicker('NVDA')">NVDA</button>
-                <button class="ticker-pill" onclick="pickTicker('JPM')">JPM</button>
-                <span class="ticker-pills-extra" id="ticker-pills-extra">
-                  <button class="ticker-pill" onclick="pickTicker('V')">V</button>
-                  <button class="ticker-pill" onclick="pickTicker('MA')">MA</button>
-                  <button class="ticker-pill" onclick="pickTicker('UNH')">UNH</button>
-                  <button class="ticker-pill" onclick="pickTicker('HD')">HD</button>
-                  <button class="ticker-pill" onclick="pickTicker('XOM')">XOM</button>
-                  <button class="ticker-pill" onclick="pickTicker('BAC')">BAC</button>
-                  <button class="ticker-pill" onclick="pickTicker('PG')">PG</button>
-                  <button class="ticker-pill" onclick="pickTicker('COST')">COST</button>
-                  <button class="ticker-pill" onclick="pickTicker('ABBV')">ABBV</button>
-                  <button class="ticker-pill" onclick="pickTicker('DIS')">DIS</button>
-                  <button class="ticker-pill" onclick="pickTicker('PYPL')">PYPL</button>
-                  <button class="ticker-pill" onclick="pickTicker('UBER')">UBER</button>
-                  <button class="ticker-pill" onclick="pickTicker('CRM')">CRM</button>
-                  <button class="ticker-pill" onclick="pickTicker('INTC')">INTC</button>
-                  <button class="ticker-pill" onclick="pickTicker('BABA')">BABA</button>
-                  <button class="ticker-pill" onclick="pickTicker('BRK.B')">BRK.B</button>
-                </span>
-                <button class="show-more-btn" id="show-more-btn" onclick="toggleMoreTickers()" data-i18n="showMore">+ 12 more</button>
-              </div>
-            </div>
-
-            <div id="portfolio-rows"></div>
-
-            <div class="portfolio-actions">
-              <button class="add-row-btn" onclick="addPortfolioRow()" data-i18n="btnAddStock">+ Add Stock</button>
-              <button id="calculate-btn" onclick="calculate()" data-i18n="btnCalculate">Calculate Portfolio Zakat</button>
-            </div>
-          </div>
-
-        </section>
-
-        <!-- RESULTS (dynamic) -->
-        <section id="results-section" class="results-section hidden" aria-live="polite"></section>
-
-        <!-- METHODOLOGY -->
-        <section class="methodology-section">
-          <div class="methodology-header">
-            <h2 class="section-title" data-i18n="methodologyTitle">The Two Methods</h2>
-            <p class="section-sub" data-i18n="methodologySub">Same shares. Same price. Same day. Two valid scholarly positions.</p>
-          </div>
-
-          <div class="method-grid">
-
-            <div class="method-card method-card--a">
-              <div class="method-card-top">
-                <span class="method-card-label" data-i18n="methodACardLabel">Method A — Full Market Value</span>
-                <h3 class="method-card-title" data-i18n="methodACardTitle">Treat Stocks as Trading Goods</h3>
-                <p data-i18n-html="methodACardBody">Treats stocks as <strong>trading goods</strong>. Zakat is due on the full market value of the portfolio, regardless of the company's underlying assets.</p>
-              </div>
-              <div class="method-formula" data-i18n="methodAFormula">Portfolio Value × 2.5%</div>
-              <p class="method-scholars" data-i18n="methodAScholars">· Qaradawi · Hanafi/Shafi'i scholars</p>
-            </div>
-
-            <div class="method-card method-card--b">
-              <div class="method-card-top">
-                <span class="method-card-label" data-i18n="methodBCardLabel">Method B — Underlying Assets</span>
-                <h3 class="method-card-title" data-i18n="methodBCardTitle">Treat Stocks as Ownership Stakes</h3>
-                <p data-i18n-html="methodBCardBody">Treats stocks as <strong>partial ownership</strong> of a company. Only the zakatable assets of the company (cash, receivables, inventory) are dutiable — approximated at 30% of market value.</p>
-              </div>
-              <div class="method-formula" data-i18n="methodBFormula">Portfolio Value × 30% × 2.5%</div>
-              <p class="method-scholars" data-i18n="methodBScholars">· AAOIFI Standard No. 35 · IFG</p>
-              <p class="proxy-note" data-i18n="proxyNote">The 30% is a scholarly proxy when company balance sheet data is unavailable. (IFG, Qaradawi)</p>
-            </div>
-
-          </div>
-
-          <div class="key-insight">
-            <p><strong data-i18n="keyInsightTitle">Why the difference matters:</strong> <span data-i18n="keyInsightBody">Method A always yields significantly more than Method B. Most online calculators only show you one method. ZakatEngine shows both so you can make an informed decision — or consult a scholar.</span></p>
-          </div>
-
-          <div class="sources-section">
-            <h3 class="sources-title" data-i18n="sourcesTitle">Sources &amp; Further Reading</h3>
-            <ul class="sources-list">
-              <li><a href="https://www.zakat.org" target="_blank" rel="noopener" data-i18n="sourceNZF">National Zakat Foundation</a></li>
-              <li><a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener" data-i18n="sourceIFG">Islamic Finance Guru — Zakat on Shares</a></li>
-            </ul>
-            <p class="sources-also"><span data-i18n="sourceSeeAlso">See also:</span>
-              <a href="https://islamqa.info/en/answers/93793" target="_blank" rel="noopener" data-i18n="sourceIslamQA">IslamQA on stocks</a> ·
-              <a href="https://www.islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener" data-i18n="sourceIFGDetail">IFG detailed guide</a>
-            </p>
-          </div>
-        </section>
-
-      </div><!-- /container -->
-    </main>
-
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-inner">
-          <div class="footer-content">
-            <p><span data-i18n="footerBuiltBy">Built by</span> <strong data-i18n="footerAuthor">Elmehdi Zangui</strong></p>
-            <p class="footer-disclaimer" data-i18n="footerDisclaimer">Educational purposes only. This is not a fatwa. Consult a qualified scholar for your specific situation.</p>
-            <p class="footer-standard" data-i18n="footerStandard">Based on <a href="https://aaoifi.com/?lang=en" target="_blank" rel="noopener">AAOIFI Shariah Standard No. 35</a> and classical fiqh positions</p>
-          </div>
+      <div class="header-right">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button class="lang-btn active" onclick="setLang('en')" data-lang="en">EN</button>
+          <button class="lang-btn" onclick="setLang('ar')" data-lang="ar">AR</button>
+          <button class="lang-btn" onclick="setLang('fr')" data-lang="fr">FR</button>
         </div>
       </div>
-    </footer>
+    </div>
+  </header>
 
-  </div><!-- /page-shell -->
+  <!-- ═══ MAIN ═══ -->
+  <main class="main-wrap">
+    <div class="container">
+
+      <!-- Hero -->
+      <div class="hero">
+        <h1 class="hero-title" data-i18n="heroTitle">Calculate Zakat on Stocks</h1>
+        <p class="hero-caption" data-i18n="heroCaption">Same portfolio. Three scholarly methods. The gap is the debate.</p>
+        <button class="methodology-link" onclick="document.getElementById('methodology-section').scrollIntoView({behavior:'smooth'})">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 1.5a5.5 5.5 0 110 11 5.5 5.5 0 010-11zM8 6a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5A.75.75 0 018 6zm0-2.25a.75.75 0 100 1.5.75.75 0 000-1.5z"/></svg>
+          <span data-i18n="methodologyTitle">Methodology</span>
+        </button>
+      </div>
+
+      <!-- Two-column layout: portfolio left, hawl clock right -->
+      <div class="portfolio-layout">
+
+      <!-- Holdings Panel -->
+      <div class="holdings-panel">
+        <div class="panel-header">
+          <div class="panel-title-row">
+            <h2 class="panel-title" data-i18n="panelTitle">Holdings</h2>
+            <span class="holdings-count" id="holdings-count"></span>
+          </div>
+          <div class="panel-actions">
+            <div class="currency-wrap">
+              <select id="currency-select" aria-label="Currency"></select>
+            </div>
+            <button class="btn-secondary" onclick="openAddHoldingModal()">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 2a.75.75 0 01.75.75v4.5h4.5a.75.75 0 010 1.5h-4.5v4.5a.75.75 0 01-1.5 0v-4.5h-4.5a.75.75 0 010-1.5h4.5v-4.5A.75.75 0 018 2z"/></svg>
+              <span data-i18n="btnAddHolding">Add Holding</span>
+            </button>
+            <button class="btn-primary" id="calculate-btn" onclick="calculate()" disabled>
+              <span data-i18n="btnCalculate">Calculate</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick picks -->
+        <div class="quick-picks">
+          <span class="quick-label" data-i18n="quickFill">Quick add:</span>
+          <button class="ticker-pill" onclick="pickTicker('AAPL')">AAPL</button>
+          <button class="ticker-pill" onclick="pickTicker('MSFT')">MSFT</button>
+          <button class="ticker-pill" onclick="pickTicker('GOOGL')">GOOGL</button>
+          <button class="ticker-pill" onclick="pickTicker('AMZN')">AMZN</button>
+          <button class="ticker-pill" onclick="pickTicker('TSLA')">TSLA</button>
+          <button class="ticker-pill" onclick="pickTicker('NVDA')">NVDA</button>
+          <button class="ticker-pill" onclick="pickTicker('META')">META</button>
+        </div>
+
+        <!-- Empty state -->
+        <div id="holdings-empty" class="holdings-empty">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect width="40" height="40" rx="12" fill="#f0ebe3"/>
+            <path d="M12 20h16M20 12v16" stroke="#c9973a" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <p data-i18n="emptyHoldings">No holdings yet — add a stock above to get started.</p>
+        </div>
+
+        <!-- Holdings table (no strategy column) -->
+        <div class="holdings-table-wrap hidden" id="holdings-table-wrap">
+          <table class="holdings-table">
+            <thead>
+              <tr>
+                <th data-i18n="thHolding">Holding</th>
+                <th data-i18n="thShares">Shares</th>
+                <th data-i18n="thPrice">Price</th>
+                <th data-i18n="thValue">Value</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="holdings-tbody"></tbody>
+          </table>
+        </div>
+      </div><!-- /holdings-panel -->
+
+      <!-- Hawl Clock Panel (sidebar) -->
+      <div class="hawl-panel">
+        <div class="hawl-section">
+          <div class="hawl-header">
+            <div class="hawl-title-row">
+              <span class="hawl-icon">⏱</span>
+              <h3 data-i18n="hawlTitle">Hawl Clock</h3>
+            </div>
+            <p class="hawl-desc" data-i18n="hawlDesc">One lunar year (354 days) must pass after your portfolio reaches nisab before zakat becomes obligatory.</p>
+          </div>
+          <div class="hawl-input-row">
+            <label for="hawl-date-input">
+              <span data-i18n="hawlDateLabel">When did your portfolio first reach nisab</span>
+              (<span id="hawl-nisab-value" class="hawl-nisab-inline">—</span>)?
+            </label>
+            <input type="date" id="hawl-date-input" oninput="updateHawlClock()" lang="">
+          </div>
+          <div id="hawl-clock-display" class="hawl-clock-display hidden">
+            <div class="hawl-cycle-row">
+              <span class="hawl-cycle-label" id="hawl-cycle-label"></span>
+              <span class="hawl-due-badge hidden" id="hawl-due-badge" data-i18n="hawlDueBadge">Due Now</span>
+            </div>
+            <div class="hawl-bar-wrap">
+              <div class="hawl-progress-track">
+                <div class="hawl-progress-fill" id="hawl-progress-bar" style="width:0%"></div>
+              </div>
+              <span class="hawl-pct" id="hawl-pct">0%</span>
+            </div>
+            <div class="hawl-dates-row">
+              <span class="hawl-date-label" id="hawl-start-label"></span>
+              <span class="hawl-date-label hawl-date-due" id="hawl-due-label"></span>
+            </div>
+            <div id="hawl-status" class="hawl-status"></div>
+          </div>
+        </div>
+      </div><!-- /hawl-panel -->
+
+      </div><!-- /portfolio-layout -->
+
+      <!-- ═══ RESULTS ═══ -->
+      <div id="results-section" class="results-section hidden">
+
+        <!-- Nisab notice -->
+        <div id="nisab-notice" class="nisab-notice hidden">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM7.25 4.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5zm.75 6.5a.75.75 0 100 1.5.75.75 0 000-1.5z"/></svg>
+          <span data-i18n="nisabNoticePrefix">Portfolio is below the nisab threshold of</span>
+          <strong class="nisab-value"></strong>.
+          <span data-i18n="nisabNoticeSuffix">Zakat is not yet obligatory.</span>
+        </div>
+
+        <!-- Persona selector -->
+        <div class="persona-section">
+          <p class="persona-label" data-i18n="personaLabel">Which best describes your relationship with these stocks?</p>
+          <div class="persona-cards">
+            <button class="persona-card" data-persona="speculator" onclick="setPersona('speculator')">
+              <span class="persona-icon">⚡</span>
+              <span class="persona-name" data-i18n="personaSpeculatorName">The Speculator</span>
+              <span class="persona-desc" data-i18n="personaSpeculatorDesc">I trade frequently or hold &lt; 12 months</span>
+              <span class="persona-method" data-i18n="personaSpeculatorMethod">Method A applies</span>
+            </button>
+            <button class="persona-card active" data-persona="passive" onclick="setPersona('passive')">
+              <span class="persona-icon">🌱</span>
+              <span class="persona-name" data-i18n="personaPassiveName">The Passive Owner</span>
+              <span class="persona-desc" data-i18n="personaPassiveDesc">I hold long-term for growth</span>
+              <span class="persona-method" data-i18n="personaPassiveMethod">Method B applies</span>
+            </button>
+            <button class="persona-card" data-persona="legacy" onclick="setPersona('legacy')">
+              <span class="persona-icon">🏛</span>
+              <span class="persona-name" data-i18n="personaLegacyName">The Legacy Builder</span>
+              <span class="persona-desc" data-i18n="personaLegacyDesc">I live off dividends, rarely trade</span>
+              <span class="persona-method" data-i18n="personaLegacyMethod">Method C applies</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Spectrum cards -->
+        <div class="spectrum-section">
+          <div class="spectrum-header">
+            <h2 data-i18n="spectrumTitle">The Methodology Spectrum</h2>
+            <p data-i18n="spectrumCaption">Same portfolio · Three scholarly interpretations · You decide</p>
+          </div>
+
+          <div class="spectrum-cards" id="spectrum-cards">
+
+            <!-- Method A -->
+            <div class="method-spectrum-card" id="method-card-a">
+              <div class="msc-top">
+                <div class="msc-badges">
+                  <span class="msc-badge badge-a" data-i18n="methodABadge">Method A</span>
+                  <span class="msc-persona-tag" data-i18n="personaSpeculatorName">The Speculator</span>
+                </div>
+                <span class="msc-highlighted-tag hidden" data-i18n="yourObligation">Your obligation</span>
+              </div>
+              <h3 data-i18n="methodATitle">Full Market Value</h3>
+              <div class="msc-amount" id="method-a-amount">—</div>
+              <div class="msc-equation">
+                <span class="eq-label" data-i18n="eqLabel">Formula:</span>
+                <code class="eq-expr" id="method-a-formula">value × 2.5%</code>
+              </div>
+              <p class="msc-desc" data-i18n="methodACardDesc">Treats shares as trading goods. The full market value of your portfolio is zakatable.</p>
+            </div>
+
+            <!-- Method B -->
+            <div class="method-spectrum-card" id="method-card-b">
+              <div class="msc-top">
+                <div class="msc-badges">
+                  <span class="msc-badge badge-b" data-i18n="methodBBadge">Method B</span>
+                  <span class="msc-persona-tag" data-i18n="personaPassiveName">The Passive Owner</span>
+                </div>
+                <span class="msc-highlighted-tag hidden" data-i18n="yourObligation">Your obligation</span>
+              </div>
+              <h3 data-i18n="methodBTitle">Zakatable Assets</h3>
+              <div class="msc-amount" id="method-b-amount">—</div>
+              <div class="msc-equation">
+                <span class="eq-label" data-i18n="eqLabel">Formula:</span>
+                <code class="eq-expr" id="method-b-formula">value × 30% × 2.5%</code>
+              </div>
+              <p class="msc-desc" data-i18n="methodBCardDesc">Treats shares as ownership. Only liquid assets (cash, receivables, inventory) — approximated at 30% — are zakatable.</p>
+            </div>
+
+            <!-- Method C -->
+            <div class="method-spectrum-card method-card-c" id="method-card-c">
+              <div class="msc-top">
+                <div class="msc-badges">
+                  <span class="msc-badge badge-c" data-i18n="methodCBadge">Method C</span>
+                  <span class="msc-persona-tag" data-i18n="personaLegacyName">The Legacy Builder</span>
+                </div>
+                <span class="msc-highlighted-tag hidden" data-i18n="yourObligation">Your obligation</span>
+              </div>
+              <h3 data-i18n="methodCTitle">Dividends Only</h3>
+              <div class="msc-amount" id="method-c-amount">—</div>
+              <div class="msc-equation">
+                <span class="eq-label" data-i18n="eqLabel">Formula:</span>
+                <code class="eq-expr" id="method-c-formula">dividends × 2.5%</code>
+              </div>
+              <p class="msc-desc" data-i18n="methodCCardDesc">Some scholars hold only received dividends are zakatable for long-term passive investors who do not intend to sell.</p>
+              <div class="dividend-field">
+                <label for="dividend-input" data-i18n="dividendLabel">Annual dividends received</label>
+                <div class="input-prefix-wrap">
+                  <span class="input-prefix">$</span>
+                  <input type="number" id="dividend-input" placeholder="0.00" min="0" step="0.01"
+                         oninput="onDividendInput()">
+                </div>
+                <p class="method-c-hint" id="method-c-hint"></p>
+              </div>
+            </div>
+
+          </div><!-- /spectrum-cards -->
+
+          <!-- Gap highlight -->
+          <div class="gap-highlight" id="gap-highlight">
+            <div class="gap-inner">
+              <div class="gap-vs">
+                <span class="gap-badge badge-a" data-i18n="methodABadge">Method A</span>
+                <span class="gap-versus" data-i18n="vsLabel">vs</span>
+                <span class="gap-badge badge-b" data-i18n="methodBBadge">Method B</span>
+              </div>
+              <div class="gap-numbers">
+                <span class="gap-label" data-i18n="gapLabel">Difference:</span>
+                <span class="gap-amount" id="gap-amount">—</span>
+              </div>
+            </div>
+            <p class="gap-pct" id="gap-pct"></p>
+            <p class="gap-caption" id="gap-caption"></p>
+          </div>
+
+        </div><!-- /spectrum-section -->
+
+        <!-- Share -->
+        <div class="share-strip">
+          <span data-i18n="shareLabel">Share this calculator</span>
+          <div class="share-btns">
+            <a href="https://api.whatsapp.com/send?text=Zakat%20Al-Mall%20—%20Stock%20Zakat%20Calculator%3A%20https%3A%2F%2Fzakat-al-mall.com" target="_blank" rel="noopener" aria-label="Share on WhatsApp" class="share-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzakat-al-mall.com" target="_blank" rel="noopener" aria-label="Share on Facebook" class="share-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fzakat-al-mall.com" target="_blank" rel="noopener" aria-label="Share on LinkedIn" class="share-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://twitter.com/intent/tweet?text=Zakat%20Al-Mall%20—%20Stock%20Zakat%20Calculator&url=https%3A%2F%2Fzakat-al-mall.com" target="_blank" rel="noopener" aria-label="Share on X" class="share-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /results-section -->
+
+      <!-- ═══ METHODOLOGY ═══ -->
+      <section id="methodology-section" class="methodology-section">
+        <h2 class="section-title" data-i18n="methodologyTitle">The Three Methods</h2>
+        <div class="method-cards">
+          <div class="method-card">
+            <div class="method-card-header">
+              <span class="method-badge badge-a" data-i18n="methodABadge">Method A</span>
+              <h3 data-i18n="methodATitle">Full Market Value</h3>
+            </div>
+            <p data-i18n-html="methodACardBody">Treats stocks as <strong>trading goods</strong>. Zakat is due on the full market value of the portfolio, regardless of the company's underlying assets.</p>
+            <div class="method-formula" data-i18n="methodAFormula">Value × 2.5%</div>
+          </div>
+          <div class="method-card">
+            <div class="method-card-header">
+              <span class="method-badge badge-b" data-i18n="methodBBadge">Method B</span>
+              <h3 data-i18n="methodBTitle">Zakatable Assets (30% proxy)</h3>
+            </div>
+            <p data-i18n-html="methodBCardBody">Treats stocks as <strong>partial ownership</strong> of a company. Only the zakatable assets (cash, receivables, inventory) are dutiable — approximated at 30% of market value.</p>
+            <div class="method-formula" data-i18n="methodBFormula">Value × 30% × 2.5%</div>
+          </div>
+          <div class="method-card">
+            <div class="method-card-header">
+              <span class="method-badge badge-c" data-i18n="methodCBadge">Method C</span>
+              <h3 data-i18n="methodCTitle">Dividends Only</h3>
+            </div>
+            <p data-i18n-html="methodCCardBody">For <strong>long-term passive investors</strong> who do not intend to sell. Some scholars hold that only received dividends are zakatable — not the full market value of shares.</p>
+            <div class="method-formula" data-i18n="methodCFormulaExpr">Dividends × 2.5%</div>
+          </div>
+        </div>
+        <p class="proxy-note" data-i18n="proxyNote">The 30% is a scholarly proxy when company balance sheet data is unavailable. (IFG, Qaradawi)</p>
+        <div class="key-insight">
+          <p><strong data-i18n="keyInsightTitle">Why the difference matters:</strong> <span data-i18n="keyInsightBody">Method A always yields significantly more than Method B. Most online calculators only show you one method. Zakat Al-Mall shows all three so you can make an informed decision — or consult a scholar.</span></p>
+        </div>
+        <div class="sources">
+          <span data-i18n="sourcesLabel">Sources:</span>
+          <a href="https://islamqa.info/en/answers/93793" target="_blank" rel="noopener" data-i18n="sourceIslamQA">IslamQA on stocks</a> ·
+          <a href="https://islamicfinanceguru.com/articles/zakat-on-shares" target="_blank" rel="noopener" data-i18n="sourceIFG">IFG — Zakat on Shares</a> ·
+          <a href="https://aaoifi.com/ss35/?lang=en" target="_blank" rel="noopener" data-i18n="sourceAAOIFI">AAOIFI Standard 35</a>
+        </div>
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footerNote">Zakat Al-Mall is educational — always verify with a qualified scholar.</p>
+    </div>
+  </footer>
+
+  <!-- ═══ ADD HOLDING MODAL (no strategy toggle) ═══ -->
+  <div id="add-holding-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title" data-i18n="modalTitle">Add a Holding</h2>
+        <button class="modal-close" onclick="closeAddHoldingModal()" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-field">
+          <label for="modal-ticker" data-i18n="modalSymbolLabel">Symbol</label>
+          <div class="autocomplete-wrap">
+            <input type="text" id="modal-ticker" placeholder="e.g. AAPL" autocomplete="off" spellcheck="false">
+            <div class="autocomplete-dropdown hidden" id="modal-ticker-dropdown"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="modal-price">
+              <span data-i18n="modalPriceLabel">Price per share</span>
+              <span id="modal-price-status" class="price-status"></span>
+            </label>
+            <div class="input-prefix-wrap">
+              <span class="input-prefix">$</span>
+              <input type="number" id="modal-price" placeholder="0.00" min="0" step="0.01">
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="modal-shares" data-i18n="modalSharesLabel">Shares</label>
+            <input type="number" id="modal-shares" placeholder="0" min="0" step="any">
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="closeAddHoldingModal()" data-i18n="modalCancel">Cancel</button>
+        <button class="btn-primary" onclick="submitAddHolding()" data-i18n="modalAdd">Add Holding</button>
+      </div>
+    </div>
+  </div>
+
   <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
