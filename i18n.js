@@ -443,7 +443,7 @@ const TRANSLATIONS = {
     hintPassive: 'يحتفظ بها للنمو / الأرباح — الطريقة ب هي التوصية الفقهية.',
 
     panelTitle: 'محفظتك',
-    quickFill: 'تعبئة سريعة:',
+    quickFill: 'اضافة سريعة:',
     showMore: '+ 12 إضافية',
     showLess: '− عرض أقل',
     btnAddStock: '+ إضافة سهم',

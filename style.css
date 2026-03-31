@@ -1,14 +1,15 @@
 /* ==============================================
    Zakat Al-Mall V2 — Light Modern Design
-   Palette: warm white · forest green · gold
+   Palette: warm parchment · forest green · gold
+   Fonts: Lora (headings) · DM Sans (body) · DM Mono (numbers)
    ============================================== */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   /* Backgrounds */
-  --bg:          #f7f6f3;
-  --surface:     #ffffff;
+  --bg:          #f5f2ec;
+  --surface:     #fdfcf9;
   --surface-alt: #f9f8f5;
 
   /* Brand */
@@ -49,7 +50,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   color: var(--ink);
   line-height: 1.6;
@@ -88,16 +89,18 @@ body {
 
 .brand-text { display: flex; flex-direction: column; }
 .brand-name {
+  font-family: 'Lora', Georgia, serif;
   font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   line-height: 1.2;
 }
 .brand-sub {
   font-size: 0.65rem;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   line-height: 1;
 }
 
@@ -135,22 +138,24 @@ body {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 /* ─── HERO ───────────────────────────────────── */
 
 .hero {
   text-align: center;
-  padding: 1.5rem 0 0.5rem;
+  padding: 2rem 0 1rem;
 }
 
 .hero-title {
-  font-size: 1.75rem;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--ink);
-  letter-spacing: -0.02em;
-  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
 
 .hero-caption {
@@ -196,7 +201,6 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  border-top: none;
   padding: 1.25rem;
 }
 
@@ -234,6 +238,7 @@ body {
 }
 
 .panel-title {
+  font-family: 'Lora', Georgia, serif;
   font-size: 1rem;
   font-weight: 700;
   color: var(--ink);
@@ -340,7 +345,7 @@ body {
   font-weight: 700;
   padding: 0.25rem 0.65rem;
   cursor: pointer;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   letter-spacing: 0.02em;
   transition: background 0.12s, border-color 0.12s, color 0.12s;
 }
@@ -356,10 +361,14 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  padding: 3rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   text-align: center;
   color: var(--ink-muted);
   font-size: 0.9rem;
+  margin: 0.5rem 0;
+  border: 2px dashed var(--gold-border, #e2c97e);
+  border-radius: var(--radius);
+  background: rgba(226, 201, 126, 0.05);
 }
 
 /* Holdings table */
@@ -402,7 +411,7 @@ body {
 
 .holding-cell { display: flex; flex-direction: column; gap: 0.1rem; }
 .holding-ticker {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--ink);
@@ -475,6 +484,7 @@ body {
   text-align: center;
   padding: 2.5rem 1.5rem 1.75rem;
   border-bottom: 1px solid var(--border-light);
+  background: linear-gradient(180deg, #f0f7f3 0%, var(--surface) 100%);
 }
 
 .total-hero-inner {
@@ -485,10 +495,11 @@ body {
 }
 
 .total-amount {
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   font-size: 3rem;
-  font-weight: 800;
-  color: var(--ink);
-  letter-spacing: -0.04em;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
   line-height: 1;
 }
@@ -559,7 +570,7 @@ body {
 .breakdown-formula {
   font-size: 0.78rem;
   color: var(--ink-muted);
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
 }
 
 .breakdown-table-wrap { overflow-x: auto; }
@@ -612,7 +623,7 @@ body {
 .proxy-tag {
   font-size: 0.68rem;
   color: var(--ink-faint);
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   margin-left: 2px;
 }
 
@@ -657,7 +668,8 @@ body {
 }
 
 .section-title {
-  font-size: 1.1rem;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--ink);
   margin-bottom: 1.25rem;
@@ -666,7 +678,7 @@ body {
 
 .method-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   margin-bottom: 1rem;
 }
@@ -693,7 +705,7 @@ body {
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.badge-a { background: #e8f0eb; color: var(--green); }
+.badge-a { background: #dbeafe; color: #1e3a5f; }
 .badge-b { background: var(--gold-light); color: var(--gold); }
 
 .method-card h3 {
@@ -710,7 +722,7 @@ body {
 }
 
 .method-formula {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   font-size: 0.78rem;
   color: var(--ink);
   background: var(--surface);
@@ -752,10 +764,10 @@ body {
 
 .site-footer {
   text-align: center;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
   font-size: 0.78rem;
   color: var(--ink-faint);
-  border-top: 1px solid var(--border);
+  border-top: 2px solid var(--gold-border);
   margin-top: 1rem;
 }
 
@@ -974,7 +986,7 @@ body {
 .autocomplete-item.focused { background: var(--surface-alt); }
 
 .ac-ticker {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   font-size: 0.82rem;
   font-weight: 700;
   color: var(--ink);
@@ -1001,8 +1013,8 @@ body {
 
 @media (max-width: 600px) {
   .main-wrap { padding: 1.5rem 0.75rem 3rem; }
-  .hero-title { font-size: 1.4rem; }
-  .total-amount { font-size: 2.2rem; }
+  .hero-title { font-size: 1.6rem; }
+  .total-amount { font-size: 2.4rem; }
   .panel-header { padding: 0.9rem 1rem; }
   .quick-picks { padding: 0.6rem 1rem; }
   .holdings-table th:first-child,
@@ -1015,6 +1027,9 @@ body {
   .breakdown-table td:first-child { padding-left: 1rem; }
   .breakdown-table th:last-child,
   .breakdown-table td:last-child  { padding-right: 1rem; }
+  .persona-section { padding: 1rem 1rem 0.75rem; }
+  .spectrum-section { padding: 1rem; }
+  .gap-amount { font-size: 1.8rem; }
 }
 
 /* ─── RTL (Arabic) ────────────────────────────── */
@@ -1022,23 +1037,29 @@ body {
 [dir="rtl"] .panel-actions        { flex-direction: row-reverse; }
 [dir="rtl"] .quick-picks          { flex-direction: row-reverse; }
 [dir="rtl"] .modal-footer         { flex-direction: row-reverse; }
+[dir="rtl"] .share-strip          { flex-direction: row-reverse; }
+[dir="rtl"] .hawl-dates-row       { flex-direction: row-reverse; }
 [dir="rtl"] .holdings-table th,
 [dir="rtl"] .holdings-table td    { text-align: right; }
 [dir="rtl"] .num-cell             { text-align: left; }
 [dir="rtl"] .breakdown-table th:not(:first-child),
 [dir="rtl"] .breakdown-table td:not(:first-child) { text-align: left; }
+[dir="rtl"] .gap-inner            { flex-direction: row-reverse; }
+[dir="rtl"] .persona-cards        { direction: rtl; }
+[dir="rtl"] .hawl-input-row       { flex-direction: row-reverse; }
 
 /* ─── PERSONA SELECTOR ────────────────────────── */
 
 .persona-section {
-  padding: 1.5rem 1.5rem 0;
+  padding: 1.5rem 1.5rem 1rem;
 }
 
 .persona-label {
-  font-size: 0.82rem;
-  color: var(--ink-muted);
+  font-size: 0.95rem;
+  color: var(--ink);
+  opacity: 0.8;
   margin-bottom: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .persona-cards {
@@ -1076,7 +1097,7 @@ body {
   font-weight: 600;
   color: var(--ink-faint);
   margin-top: 0.25rem;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
 }
 .persona-card.active .persona-method { color: var(--green); }
 
@@ -1086,15 +1107,16 @@ body {
 
 .spectrum-header { margin-bottom: 1.1rem; }
 .spectrum-header h2 {
-  font-size: 1rem;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--ink);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 .spectrum-header p {
   font-size: 0.78rem;
   color: var(--ink-muted);
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
 }
 
 .spectrum-cards {
@@ -1146,9 +1168,9 @@ body {
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.badge-a { background: #e8f0eb; color: var(--green); }
+.badge-a { background: #dbeafe; color: #1e3a5f; }
 .badge-b { background: var(--gold-light); color: #92600a; }
-.badge-c { background: #ede9fe; color: #5b21b6; }
+.badge-c { background: #fef3e2; color: #92400e; }
 
 .msc-persona-tag {
   font-size: 0.68rem;
@@ -1173,10 +1195,11 @@ body {
 }
 
 .msc-amount {
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   font-size: 1.65rem;
-  font-weight: 800;
+  font-weight: 500;
   color: var(--ink);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
   line-height: 1.1;
 }
@@ -1195,7 +1218,7 @@ body {
   font-weight: 600;
 }
 .eq-expr {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   font-size: 0.72rem;
   color: var(--ink-muted);
   background: var(--surface);
@@ -1239,11 +1262,11 @@ body {
 /* ─── GAP HIGHLIGHT ───────────────────────────── */
 
 .gap-highlight {
-  background: linear-gradient(135deg, #7c3000 0%, #a84000 100%);
+  background: linear-gradient(135deg, #1a4731 0%, #22603f 100%);
   border-radius: var(--radius-lg);
   padding: 1.25rem 1.5rem;
   color: #fff;
-  border: 1.5px solid rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.1);
 }
 
 .gap-inner {
@@ -1283,10 +1306,11 @@ body {
   font-weight: 500;
 }
 .gap-amount {
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
   font-size: 2.2rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: -0.04em;
+  font-weight: 500;
+  color: #f5d98a;
+  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
 .gap-pct {
@@ -1338,7 +1362,7 @@ body {
 .hawl-nisab-inline {
   font-weight: 700;
   color: var(--green);
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'DM Mono', 'SF Mono', 'Fira Code', monospace;
 }
 .hawl-input-row input[type="date"] {
   border: 1.5px solid var(--border);
@@ -1414,6 +1438,9 @@ body {
 
 @media (max-width: 720px) {
   .spectrum-cards { grid-template-columns: 1fr; }
+  .persona-cards  { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
   .persona-cards  { grid-template-columns: 1fr; }
 }
 
@@ -1432,7 +1459,7 @@ body {
 
 .hawl-cycle-label {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: var(--ink-muted);
   font-weight: 500;
 }
 
@@ -1452,7 +1479,7 @@ body {
 
 .method-c-hint {
   font-size: 0.72rem;
-  color: var(--text-muted);
+  color: var(--ink-muted);
   margin-top: 0.4rem;
   font-style: italic;
 }
@@ -1466,4 +1493,83 @@ body {
 [dir="rtl"] .input-prefix-wrap input {
   padding-left: 0.75rem;
   padding-right: 2rem;
+}
+
+/* ─── ADDITIONAL POLISH ───────────────────────── */
+
+/* Lora on hawl title */
+.hawl-title-row h3 {
+  font-family: 'Lora', Georgia, serif;
+}
+
+/* Lora on breakdown section titles */
+.breakdown-title-row h3 {
+  font-family: 'Lora', Georgia, serif;
+}
+
+/* Smooth total-amount transition */
+.total-amount {
+  transition: color 0.3s ease;
+}
+
+/* Empty state icon — warmer bg */
+.holdings-empty svg rect {
+  fill: var(--gold-light);
+}
+
+/* Focus ring — use gold for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Active persona card — stronger gold left border accent */
+.persona-card.active {
+  border-left: 3px solid var(--green);
+}
+
+/* Method spectrum card highlighted — stronger left accent */
+.method-spectrum-card.method-card--highlighted {
+  border-left: 3px solid var(--green);
+}
+
+/* Hawl progress fill — smoother gradient */
+.hawl-progress-fill {
+  background: linear-gradient(90deg, var(--green) 0%, #2d9a5a 100%);
+}
+
+/* Hero caption slightly larger */
+.hero-caption {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* Methodology link pill — use DM Sans */
+.methodology-link {
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Improve quick-label legibility */
+.quick-label {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+/* Panel header — subtle border treatment */
+.holdings-panel {
+  box-shadow: var(--shadow-md);
+}
+
+/* Results section — stronger shadow */
+.results-section {
+  box-shadow: var(--shadow-md);
+}
+
+/* Mobile: header height compact */
+@media (max-width: 480px) {
+  .header-inner { height: 50px; }
+  .brand-sub { display: none; }
 }
